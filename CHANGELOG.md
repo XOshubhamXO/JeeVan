@@ -1,16 +1,24 @@
 # JeeVan — Changelog
-> **v1.1.4** | **$0/month** | **33 pages, 0 errors** | **86 images** | **All keys LIVE**
+> **v1.1.5** | **$0/month** | **33 pages, 0 errors** | **89 images** | **0 duplicates**
 
-## v1.1.4 — All Keys Wired + 10 Images + Vercel Analysis
+## v1.1.5 — Deep Verification + Image Deduplication
 
-### 4 Live API Keys Configured
-Mistral, HuggingFace, Firebase, Brevo — all wired in `.env`, `.env.development`, and **Vercel**
+### Plant Directory — 100% Unique Images
+- **53 plants, 53 unique images** — zero duplicates verified
+- Fixed 22 missing references (20 missing + 2 dupes)
+- 9 new AI images generated (field-16..24)
+- Cleaned duplicate files (button-mushroom, oyster-mushroom dupes)
+- Mapped all numbered images to correct plants
 
-### Vercel Alternatives Researched
-**Cloudflare Pages** = best free Vercel alternative (unlimited bandwidth). Switch only if 100GB cap becomes issue.
+### All API Keys — Verified Live on Vercel
+Mistral, HuggingFace, Firebase, Brevo, Groq, Gemini, DeepL, Mailchimp, Agmarknet, Razorpay = all configured
 
-### 10 New AI Images
-`field-13/14/15`, `grain-08/09`, `root-09/10`, `fungi-06`, `shop-saplings-01`, `shop-compost-01`
+### Vercel Alternative
+Cloudflare Pages for unlimited bandwidth if needed
 
-## Platform State
-14 pages · 16 APIs · 25 components · 53 plants · 20 shop products · 6 podcasts · 5 blogs · 9 admin tabs · 86 images · 12 live API keys · 33 compiled pages
+### Image Audit
+- 89 total JPGs on disk
+- 53 plants = 53 unique images
+- 20 shop products = all with images
+- 6 hero/venture/cause images
+- 10 product/shop photos

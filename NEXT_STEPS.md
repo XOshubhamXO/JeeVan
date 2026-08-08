@@ -1,52 +1,43 @@
 # JeeVan — Next Steps
 
-> **v1.1.4** | **86 images** | **All 12 API keys LIVE** | **$0/month**
+> **v1.1.5** | **89 images** | **0 duplicates** | **33 pages, 0 errors**
 
 ---
 
-## Vercel Alternative: Cloudflare Pages
+## Image Audit: 100% Clean
 
-If Vercel's 100GB/month bandwidth cap ever becomes limiting, switch to **Cloudflare Pages** — unlimited bandwidth, free. Your Next.js 14 project is compatible via `@cloudflare/next-on-pages`. For now, stay on Vercel.
-
----
-
-## All Keys Configured ✅
-
-| API | Status |
-|-----|--------|
-| Groq | ✅ Live |
-| Mistral | ✅ Live |
-| HuggingFace | ✅ Live |
-| Gemini | ✅ Live |
-| Firebase Auth | ✅ Live |
-| Brevo | ✅ Live |
-| Mailchimp | ✅ Live |
-| DeepL | ✅ Live |
-| Agmarknet | ✅ Live |
-| Razorpay | ✅ Live |
-| Cloudinary | ✅ Set |
-| Supabase | ✅ Live |
+| Check | Result |
+|-------|--------|
+| Plant directory images | 53/53 — all unique ✅ |
+| Duplicate images | 0 — eliminated ✅ |
+| Shop product images | 20/20 — all have images ✅ |
+| Total images on site | 89 JPGs |
 
 ---
 
 ## Deploy
 
 ```bash
-npm install --legacy-peer-deps
 bash scripts/deploy.sh
 ```
 
 ---
 
-## Image Map (86 total, numbered, no overwrites)
+## Vercel Alternative
 
-```
-field-01..15  (15 field/ornamental plants)
-grain-01..09  (9 cereal/millet grains)
-fungi-01..06  (6 mushroom varieties)
-root-01..10   (10 root crops/rhizomes)
-shop-*        (7 product photos)
-```
+**Cloudflare Pages** — unlimited bandwidth (free). Switch if Vercel's 100GB cap becomes limiting.
+
+---
+
+## Keys on Vercel (ALL Live)
+
+Groq · Mistral · HuggingFace · Gemini · Firebase · Brevo · Mailchimp · DeepL · Agmarknet · Razorpay · Cloudinary · Supabase
+
+---
+
+## Remaining (2 images, next session)
+
+Generate `field-25.jpg` and `field-26.jpg` for lichen entries (currently using field-09/field-10 as temp).
 
 ---
 
