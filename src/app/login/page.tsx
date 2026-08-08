@@ -13,12 +13,19 @@ export default function LoginPage() {
 
   const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault(); setLoading(true)
-    try { const r = await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(mode==='email'?{email,type:'email'}:{phone,type:'phone'})}); if(r.ok)setStep('otp') } catch {}
+    try {
+      const r = await fetch('/api/auth/login', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(mode==='email'?{email,type:'email'}:{phone,type:'phone'}) })
+      if (r.ok) setStep('otp')
+    } catch {}
     setLoading(false)
   }
+
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault(); setLoading(true)
-    try { const r = await fetch('/api/auth/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:otp,type:mode,identifier:mode==='email'?email:phone})}); if(r.ok)window.location.href='/hub' } catch {}
+    try {
+      const r = await fetch('/api/auth/verify', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({token:otp,type:mode,identifier:mode==='email'?email:phone}) })
+      if (r.ok) window.location.href = '/hub'
+    } catch {}
     setLoading(false)
   }
 
@@ -44,7 +51,9 @@ export default function LoginPage() {
             <button type="submit" disabled={loading} className="btn-primary w-full justify-center">{loading?'Verifying...':'Verify & Login'}</button>
           </form>
         )}
-        <p className="text-[10px] text-center mt-6" style={{color:'var(--text-muted)'}}>OTP-based login via Supabase Auth (free tier).</p>
+        <p className="text-[10px] text-center mt-6" style={{color:'var(--text-muted)'}}>Free OTP via REST API. Email + Phone supported. No passwords.</p>
+        <div className="flex items-center gap-3 my-4"><div className="flex-1 h-px" style={{background:'var(--border-subtle)'}}/><span className="text-[10px]" style={{color:'var(--text-muted)'}}>OR</span><div className="flex-1 h-px" style={{background:'var(--border-subtle)'}}/></div>
+        <button onClick={()=>{window.location.href='/hub'}} className="btn-secondary w-full justify-center text-xs">Continue as Guest</button>
       </motion.div>
     </div>
   )
