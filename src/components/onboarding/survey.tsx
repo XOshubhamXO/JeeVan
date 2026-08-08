@@ -1,238 +1,130 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
 'use client'
-
-/**
- * JeeVan Mini Survey Module
- *
- * Collects Name, Age, Detected Location, and Primary Interest
- * before entering the main JeeVan Hub.
- */
-
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import {
-  User, Calendar, MapPin, Sprout, Trees, Monitor,
-  Handshake, Heart, ArrowRight, Loader2,
-} from 'lucide-react'
-import { useUserStore, type UserInterest } from '@/lib/store'
-import { fetchGeolocation } from '@/lib/api/failover'
+import { User, MapPin, Sprout, Heart, Check, ArrowRight } from 'lucide-react'
+import { useUserStore } from '@/lib/store'
+import { useI18n } from '@/lib/i18n'
 
-interface SurveyProps {
-  onComplete: () => void
-}
-
-const INTERESTS: { id: UserInterest; label: string; icon: React.ReactNode; description: string }[] = [
-  {
-    id: 'natural_produce',
-    label: 'Natural Produce',
-    icon: <Sprout className="w-5 h-5" />,
-    description: 'Fresh, chemical-free vegetables, fruits, and staples.',
-  },
-  {
-    id: 'nursery_plants',
-    label: 'Nursery Plants',
-    icon: <Trees className="w-5 h-5" />,
-    description: 'Saplings, seeds, ornamentals, and rare heirloom varieties.',
-  },
-  {
-    id: 'tech_consulting',
-    label: 'Tech & Consulting',
-    icon: <Monitor className="w-5 h-5" />,
-    description: 'Software, web apps, hardware, and startup advisory.',
-  },
-  {
-    id: 'partnerships',
-    label: 'Partnerships',
-    icon: <Handshake className="w-5 h-5" />,
-    description: 'Commercial collaboration and institutional partnerships.',
-  },
-  {
-    id: 'social_causes',
-    label: 'Social Causes',
-    icon: <Heart className="w-5 h-5" />,
-    description: 'Environmental awareness, zero-emission, circular economy.',
-  },
+const INTERESTS = [
+  { id: 'natural_produce', label: 'Natural Produce', icon: <Sprout className="w-4 h-4" />, desc: 'Fresh organic vegetables & fruits' },
+  { id: 'nursery_plants', label: 'Nursery Plants', icon: <Sprout className="w-4 h-4" />, desc: 'Saplings, seeds & rare varieties' },
+  { id: 'tech_consulting', label: 'Tech Consulting', icon: <Sprout className="w-4 h-4" />, desc: 'Software, PC builds & startup advice' },
+  { id: 'partnerships', label: 'Partnerships', icon: <Heart className="w-4 h-4" />, desc: 'Collaborate with JeeVan' },
+  { id: 'social_causes', label: 'Social Causes', icon: <Heart className="w-4 h-4" />, desc: 'Pedal4Planet & Adira Biocycle' },
 ]
 
-export default function MiniSurvey({ onComplete }: SurveyProps) {
-  const { session, setSurveyData, setInterest } = useUserStore()
-  const [name, setName] = useState(session.name)
+export default function MiniSurvey({ onComplete }: { onComplete: () => void }) {
+  const { session, setSurveyData, setInterest, completeOnboarding } = useUserStore()
+  const { t } = useI18n()
+  const [name, setName] = useState(session.name || '')
   const [age, setAge] = useState(session.age?.toString() || '')
-  const [selectedInterest, setSelectedInterest] = useState<UserInterest | null>(session.interest)
-  const [detecting, setDetecting] = useState(true)
-  const [locationText, setLocationText] = useState('Detecting...')
-  const hasDetected = useRef(false)
+  const [location, setLocation] = useState(session.countryName || '')
+  const [interest, setInterestLocal] = useState<string | null>(session.interest || null)
+  const [submitted, setSubmitted] = useState(false)
 
-  // ─── Auto-detect location ───
-  useEffect(() => {
-    if (hasDetected.current) return
-    hasDetected.current = true
-
-    async function detectLocation() {
-      try {
-        const { data } = await fetchGeolocation<{ city: string; region: string; country: string; loc: string }>()
-        const [lat, lng] = (data.loc || '25.13,85.44').split(',').map(Number)
-        const loc = {
-          lat,
-          lng,
-          city: data.city || 'Nalanda',
-          region: data.region || 'Bihar',
-          country: data.country || 'IN',
-        }
-        setSurveyData({ detectedLocation: loc })
-        setLocationText(`${loc.city}, ${loc.region}, ${loc.country}`)
-      } catch {
-        // Fallback: use default Nalanda location
-        setSurveyData({
-          detectedLocation: {
-            lat: 25.13,
-            lng: 85.44,
-            city: 'Nalanda',
-            region: 'Bihar',
-            country: 'IN',
-          },
-        })
-        setLocationText('Nalanda, Bihar, IN')
-      } finally {
-        setDetecting(false)
-      }
-    }
-
-    detectLocation()
-  }, [setSurveyData])
-
-  // ─── Handle completion ───
   const handleSubmit = () => {
     setSurveyData({
-      name,
+      name: name || 'Friend',
       age: age ? parseInt(age) : null,
+      countryName: location || session.countryName,
     })
-    if (selectedInterest) {
-      setInterest(selectedInterest)
-    }
-    onComplete()
+    if (interest) setInterest(interest as any)
+    
+    // Send telemetry
+    fetch('/api/telemetry', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'onboarding',
+        name: name || 'Friend',
+        age: age || null,
+        country: location || session.countryName,
+        language: session.selectedLanguage,
+        theme: session.selectedTheme,
+        interest,
+        timestamp: new Date().toISOString(),
+      }),
+    }).catch(() => {})
+    
+    setSubmitted(true)
+    setTimeout(() => {
+      completeOnboarding()
+      onComplete()
+    }, 800)
   }
 
-  const isValid = name.trim().length > 0 && selectedInterest !== null
-
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      className="w-full max-w-xl mx-auto px-4 py-12"
-    >
-      {/* Header */}
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="w-full max-w-2xl mx-auto px-4 py-8">
       <div className="text-center mb-10">
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ type: 'spring', stiffness: 200 }}
-          className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-amber-900/20 backdrop-blur-md border border-amber-700/30 mb-6"
-        >
-          <User className="w-10 h-10 text-amber-400" />
+        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 200 }}
+          className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-5" style={{ background: 'rgba(74,103,65,0.07)', border: '1px solid rgba(74,103,65,0.12)' }}>
+          <User className="w-8 h-8" style={{ color: 'var(--accent-green)' }} />
         </motion.div>
-        <h1 className="text-3xl md:text-4xl font-light tracking-tight mb-3">
-          Tell us about yourself
-        </h1>
-        <p className="text-lg opacity-70">
-          Just a few details to personalize your JeeVan experience.
-        </p>
+        <h1 style={{ fontFamily: 'var(--font-display)' }}>Tell us about yourself</h1>
+        <p className="lead max-w-md mx-auto mt-3">Help us personalize your JeeVan experience. This helps us show relevant crops and content.</p>
       </div>
 
-      <div className="space-y-6">
-        {/* Name */}
-        <div>
-          <label className="flex items-center gap-2 text-sm font-medium opacity-70 mb-2">
-            <User className="w-4 h-4" /> Your Name
-          </label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Enter your name"
-            className="w-full px-4 py-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 focus:outline-none focus:border-green-500/50 focus:ring-2 focus:ring-green-500/20 transition-all"
-          />
-        </div>
+      {submitted ? (
+        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-12">
+          <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: 'rgba(74,103,65,0.1)' }}>
+            <Check className="w-10 h-10" style={{ color: 'var(--accent-green)' }} />
+          </div>
+          <h2 style={{ fontFamily: 'var(--font-display)' }} className="text-xl mb-2">Welcome to JeeVan, {name || 'Friend'}!</h2>
+          <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Redirecting to your dashboard...</p>
+        </motion.div>
+      ) : (
+        <div className="space-y-6">
+          {/* Name */}
+          <div>
+            <label className="label flex items-center gap-2 mb-2"><User className="w-3.5 h-3.5" />{t('survey.name')}</label>
+            <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Your name" className="input" />
+          </div>
 
-        {/* Age */}
-        <div>
-          <label className="flex items-center gap-2 text-sm font-medium opacity-70 mb-2">
-            <Calendar className="w-4 h-4" /> Age (optional)
-          </label>
-          <input
-            type="number"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-            placeholder="Your age"
-            min="1"
-            max="120"
-            className="w-full px-4 py-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 focus:outline-none focus:border-green-500/50 focus:ring-2 focus:ring-green-500/20 transition-all"
-          />
-        </div>
+          {/* Age */}
+          <div>
+            <label className="label flex items-center gap-2 mb-2">{t('survey.age')}</label>
+            <input type="number" value={age} onChange={e => setAge(e.target.value)} placeholder="25" min="1" max="120" className="input" />
+          </div>
 
-        {/* Detected Location */}
-        <div>
-          <label className="flex items-center gap-2 text-sm font-medium opacity-70 mb-2">
-            <MapPin className="w-4 h-4" /> Detected Location
-          </label>
-          <div className="w-full px-4 py-3 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center gap-2">
-            {detecting ? (
-              <Loader2 className="w-4 h-4 animate-spin opacity-60" />
-            ) : (
-              <MapPin className="w-4 h-4 text-green-400" />
-            )}
-            <span className={detecting ? 'opacity-50' : ''}>{locationText}</span>
+          {/* Location */}
+          <div>
+            <label className="label flex items-center gap-2 mb-2"><MapPin className="w-3.5 h-3.5" />{t('survey.location')}</label>
+            <input type="text" value={location} onChange={e => setLocation(e.target.value)} placeholder={session.countryName || 'Detected location'} className="input" />
+            <p className="text-[10px] mt-1" style={{ color: 'var(--text-muted)' }}>Auto-detected from your country selection</p>
+          </div>
+
+          {/* Interests */}
+          <div>
+            <label className="label flex items-center gap-2 mb-3"><Heart className="w-3.5 h-3.5" />{t('survey.interest')}</label>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+              {INTERESTS.map(i => (
+                <motion.button key={i.id} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                  onClick={() => setInterestLocal(i.id === interest ? null : i.id)}
+                  className="p-3.5 rounded-xl border transition-all duration-200 text-left flex items-center gap-2.5"
+                  style={{
+                    background: interest === i.id ? 'rgba(74,103,65,0.08)' : 'var(--bg-surface)',
+                    borderColor: interest === i.id ? 'rgba(74,103,65,0.3)' : 'var(--border-subtle)',
+                  }}>
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: 'rgba(74,103,65,0.08)', color: 'var(--accent-green)' }}>{i.icon}</div>
+                  <div className="min-w-0">
+                    <p className="text-xs font-medium truncate" style={{ color: 'var(--text-primary)' }}>{i.label}</p>
+                    <p className="text-[10px] truncate" style={{ color: 'var(--text-muted)' }}>{i.desc}</p>
+                  </div>
+                </motion.button>
+              ))}
+            </div>
+          </div>
+
+          <div className="text-center pt-4">
+            <button onClick={handleSubmit}
+              className="px-10 py-3.5 rounded-full text-white font-medium transition-all hover:scale-105"
+              style={{ background: 'var(--accent-green)', boxShadow: '0 4px 20px rgba(74,103,65,0.3)' }}>
+              {t('survey.enter_hub')} <ArrowRight className="w-4 h-4 ml-1" />
+            </button>
           </div>
         </div>
-
-        {/* Interest Selection */}
-        <div>
-          <label className="flex items-center gap-2 text-sm font-medium opacity-70 mb-3">
-            <Sprout className="w-4 h-4" /> What brings you to JeeVan?
-          </label>
-          <div className="grid gap-2">
-            {INTERESTS.map((interest) => (
-              <motion.button
-                key={interest.id}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => setSelectedInterest(interest.id)}
-                className={`flex items-center gap-4 p-4 rounded-xl border transition-all text-left ${
-                  selectedInterest === interest.id
-                    ? 'bg-amber-600/30 border-amber-500 shadow-lg shadow-amber-500/20'
-                    : 'bg-white/5 border-white/10 hover:bg-white/10'
-                }`}
-              >
-                <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                  selectedInterest === interest.id ? 'bg-amber-500/30' : 'bg-white/10'
-                }`}>
-                  {interest.icon}
-                </div>
-                <div className="flex-1">
-                  <p className="font-medium">{interest.label}</p>
-                  <p className="text-sm opacity-60">{interest.description}</p>
-                </div>
-              </motion.button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Submit */}
-      <div className="mt-8 flex justify-end">
-        <motion.button
-          whileTap={isValid ? { scale: 0.97 } : {}}
-          onClick={handleSubmit}
-          disabled={!isValid}
-          className={`flex items-center gap-2 px-8 py-3.5 rounded-xl font-medium transition-all ${
-            isValid
-              ? 'bg-green-600 hover:bg-green-500 shadow-lg shadow-green-600/30'
-              : 'bg-white/10 opacity-30 cursor-not-allowed'
-          }`}
-        >
-          Enter JeeVan Hub
-          <ArrowRight className="w-5 h-5" />
-        </motion.button>
-      </div>
+      )}
     </motion.div>
   )
 }

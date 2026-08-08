@@ -35,6 +35,7 @@ export interface UserSession {
     country: string
   } | null
   selectedLanguage: string
+  selectedLanguages: string[]
   selectedTheme: ThemeType
   interest: UserInterest | null
   onboardingCompleted: boolean
@@ -68,6 +69,7 @@ export const useUserStore = create<{
   session: UserSession
   setCountry: (code: string, name: string) => void
   setLanguage: (lang: string) => void
+  setLanguages: (langs: string[]) => void
   setTheme: (theme: ThemeType) => void
   setInterest: (interest: UserInterest) => void
   setSurveyData: (data: Partial<UserSession>) => void
@@ -83,6 +85,7 @@ export const useUserStore = create<{
         countryName: '',
         detectedLocation: null,
         selectedLanguage: 'en',
+        selectedLanguages: ['en'],
         selectedTheme: 'nature',
         interest: null,
         onboardingCompleted: false,
@@ -94,6 +97,10 @@ export const useUserStore = create<{
       setLanguage: (lang) =>
         set((state) => ({
           session: { ...state.session, selectedLanguage: lang },
+        })),
+      setLanguages: (langs) =>
+        set((state) => ({
+          session: { ...state.session, selectedLanguages: langs },
         })),
       setTheme: (theme) => {
         if (typeof document !== 'undefined') {
@@ -124,6 +131,7 @@ export const useUserStore = create<{
             countryName: '',
             detectedLocation: null,
             selectedLanguage: 'en',
+            selectedLanguages: ['en'],
             selectedTheme: 'nature',
             interest: null,
             onboardingCompleted: false,

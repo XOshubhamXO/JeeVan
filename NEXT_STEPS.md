@@ -1,22 +1,36 @@
 # JeeVan — Next Steps
-> **v1.1.7** | **112 images** | **33 pages** | **$0/month**
 
-## Country Selection — Map+Flag Hover Live
-- Hover any country → SVG map outline appears in background
-- Flag embedded inside animated rings
-- Top 20 agricultural nations shown first
-- All 195 countries searchable
+> **v1.1.8** | **Onboarding rebuilt** | **33 pages, 0 errors**
+
+---
+
+## What Changed — Onboarding from Scratch
+
+### Country Selection
+- Hover any country → its **SVG map outline** appears in background
+- Country **flag displayed inside** animated rings on the map
+- Top 20 agricultural nations shown first, **"Show 175 more"** expands the rest
+- **Confirm & Continue** button after selection
+
+### Language Selection
+- **Country languages first**, then all 28 world languages
+- Pick **2+ languages** — first = primary, others = toggle options
+- Native script names (हिन्दी, বাংলা, Español...)
+
+### Theme Selection  
+- Light / Dark / Nature with color preview swatches
+- Instantly applied on selection
+
+### Floating Controller
+- Fixed bottom-right button opens **language toggle + theme toggle**
+- Switch primary language instantly
+- Reconfigure link back to onboarding
+
+---
 
 ## Deploy
 ```bash
 bash scripts/deploy.sh
-```
-
-## Image Map (112 total)
-```
-field-01..29 (29)  grain-01..10 (10)  fungi-01..06 (6)
-root-01..12 (12)   shop-* (8)         plants/* (27 original)
-hero/venture/cause (10)  icons (2)  og/bg (2)
 ```
 
 ## Admin

@@ -1,156 +1,101 @@
 'use client'
-
-/**
- * JeeVan Floating Language & Theme Toggle
- *
- * Persistent floating button (bottom-right) for reconfiguring
- * language preferences and theme at any time during the session.
- */
-
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Languages, Settings2, Sun, Moon, Leaf } from 'lucide-react'
-import { useUserStore, type ThemeType } from '@/lib/store'
+import { Settings2, Languages, Leaf, Moon, Sun, X } from 'lucide-react'
+import { useUserStore } from '@/lib/store'
 import { useI18n } from '@/lib/i18n'
 
-const LANGUAGES = [
-  { code: 'en', name: 'English', nativeName: 'English' },
-  { code: 'hi', name: 'Hindi', nativeName: 'हिन्दी' },
-  { code: 'bh', name: 'Maithili', nativeName: 'मैथिली' },
-  { code: 'bn', name: 'Bengali', nativeName: 'বাংলা' },
-  { code: 'ta', name: 'Tamil', nativeName: 'தமிழ்' },
-  { code: 'te', name: 'Telugu', nativeName: 'తెలుగు' },
-  { code: 'mr', name: 'Marathi', nativeName: 'मराठी' },
-  { code: 'es', name: 'Spanish', nativeName: 'Español' },
-  { code: 'fr', name: 'French', nativeName: 'Français' },
-  { code: 'zh', name: 'Chinese', nativeName: '中文' },
-]
-
-const THEMES: { id: ThemeType; label: string; icon: React.ReactNode }[] = [
-  { id: 'light', label: 'Light', icon: <Sun className="w-4 h-4" /> },
-  { id: 'dark', label: 'Dark', icon: <Moon className="w-4 h-4" /> },
-  { id: 'nature', label: 'Nature', icon: <Leaf className="w-4 h-4" /> },
-]
+const WORLD_LANGUAGES: Record<string, string> = {
+  en: 'English', hi: 'हिन्दी', bn: 'বাংলা', es: 'Español', fr: 'Français',
+  ar: 'العربية', pt: 'Português', ru: 'Русский', ja: '日本語', de: 'Deutsch',
+  pa: 'ਪੰਜਾਬੀ', mr: 'मराठी', te: 'తెలుగు', ta: 'தமிழ்', ur: 'اردو',
+  gu: 'ગુજરાતી', kn: 'ಕನ್ನಡ', ml: 'മലയാളം', or: 'ଓଡ଼ିଆ', zh: '中文',
+  ko: '한국어', it: 'Italiano', tr: 'Türkçe', vi: 'Tiếng Việt', th: 'ไทย',
+}
 
 export default function FloatingController() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [tab, setTab] = useState<'lang' | 'theme'>('lang')
   const { session, setLanguage, setTheme } = useUserStore()
   const { setLang } = useI18n()
+  const [open, setOpen] = useState(false)
+  const [tab, setTab] = useState<'lang' | 'theme'>('lang')
+
+  const userLangs = session.selectedLanguages?.length ? session.selectedLanguages : ['en']
+  const primary = userLangs[0]
 
   return (
     <>
-      {/* Backdrop */}
+      {/* FAB */}
+      <motion.button
+        initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 1, type: 'spring' }}
+        onClick={() => setOpen(!open)}
+        className="fixed bottom-6 right-6 z-[250] w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110"
+        style={{ background: open ? 'var(--accent-green)' : 'var(--bg-surface)', border: '1px solid var(--border-subtle)' }}>
+        {open ? <X className="w-5 h-5 text-white" /> : <Settings2 className="w-5 h-5" style={{ color: 'var(--text-secondary)' }} />}
+      </motion.button>
+
       <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40"
-            onClick={() => setIsOpen(false)}
-          />
+        {open && (
+          <motion.div initial={{ opacity: 0, y: 20, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            className="fixed bottom-20 right-6 z-[250] w-[320px] max-w-[calc(100vw-3rem)] rounded-2xl p-5 shadow-2xl" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)' }}>
+            
+            {/* Tabs */}
+            <div className="flex gap-1 mb-4">
+              <button onClick={() => setTab('lang')} className={`flex-1 py-2 rounded-xl text-xs font-medium transition-all ${tab === 'lang' ? 'bg-green-600/15 text-green-600' : 'opacity-45'}`}>
+                <Languages className="w-3.5 h-3.5 inline mr-1" /> Languages
+              </button>
+              <button onClick={() => setTab('theme')} className={`flex-1 py-2 rounded-xl text-xs font-medium transition-all ${tab === 'theme' ? 'bg-green-600/15 text-green-600' : 'opacity-45'}`}>
+                <Leaf className="w-3.5 h-3.5 inline mr-1" /> Theme
+              </button>
+            </div>
+
+            {tab === 'lang' ? (
+              <div>
+                <p className="text-[10px] uppercase tracking-wider mb-3" style={{ color: 'var(--text-muted)' }}>Toggle languages — tap to switch primary</p>
+                <div className="space-y-1.5 max-h-56 overflow-y-auto">
+                  {userLangs.map((l) => (
+                    <button key={l}
+                      onClick={() => {
+                        setLanguage(l)
+                        setLang(l)
+                      }}
+                      className={`w-full flex items-center justify-between p-2.5 rounded-xl text-xs transition-all ${l === primary ? 'bg-green-600/10 border border-green-500/20' : 'hover:bg-white/5'}`}>
+                      <div className="flex items-center gap-2">
+                        <span className={`w-5 h-5 rounded-md flex items-center justify-center text-[9px] font-bold ${l === primary ? 'bg-green-600/20 text-green-600' : ''}`} style={{ background: l === primary ? undefined : 'var(--bg-secondary)' }}>
+                          {l.toUpperCase()}
+                        </span>
+                        <span className="font-medium">{WORLD_LANGUAGES[l] || l}</span>
+                      </div>
+                      {l === primary && <span className="text-[9px] px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(74,103,65,0.12)', color: 'var(--accent-green)' }}>Active</span>}
+                    </button>
+                  ))}
+                </div>
+                <p className="text-[9px] mt-3 text-center" style={{ color: 'var(--text-muted)' }}>
+                  Re-configure on <span onClick={() => { window.location.href = '/' }} className="underline cursor-pointer hover:opacity-70">home page</span>
+                </p>
+              </div>
+            ) : (
+              <div>
+                <p className="text-[10px] uppercase tracking-wider mb-3" style={{ color: 'var(--text-muted)' }}>Switch theme</p>
+                <div className="space-y-1.5">
+                  {[
+                    { id: 'light' as const, name: 'Light', icon: <Sun className="w-4 h-4" /> },
+                    { id: 'dark' as const, name: 'Dark', icon: <Moon className="w-4 h-4" /> },
+                    { id: 'nature' as const, name: 'Nature', icon: <Leaf className="w-4 h-4" /> },
+                  ].map(t => (
+                    <button key={t.id}
+                      onClick={() => setTheme(t.id)}
+                      className={`w-full flex items-center gap-3 p-2.5 rounded-xl text-xs transition-all ${session.selectedTheme === t.id ? 'bg-green-600/10 border border-green-500/20' : 'hover:bg-white/5'}`}>
+                      <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'var(--bg-secondary)' }}>{t.icon}</div>
+                      <span className="font-medium">{t.name}</span>
+                      {session.selectedTheme === t.id && <span className="ml-auto text-[9px] px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(74,103,65,0.12)', color: 'var(--accent-green)' }}>Active</span>}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Floating Button */}
-      <div className="fixed bottom-6 right-6 z-50">
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 10 }}
-              className="absolute bottom-16 right-0 w-72 bg-black/90 backdrop-blur-xl rounded-2xl border border-white/20 shadow-2xl overflow-hidden mb-4"
-            >
-              {/* Tab Switcher */}
-              <div className="flex border-b border-white/10">
-                <button
-                  onClick={() => setTab('lang')}
-                  className={`flex-1 py-3 text-sm font-medium transition-colors ${
-                    tab === 'lang' ? 'text-green-400 border-b-2 border-green-400' : 'opacity-50'
-                  }`}
-                >
-                  <Languages className="w-4 h-4 inline mr-1" /> Language
-                </button>
-                <button
-                  onClick={() => setTab('theme')}
-                  className={`flex-1 py-3 text-sm font-medium transition-colors ${
-                    tab === 'theme' ? 'text-green-400 border-b-2 border-green-400' : 'opacity-50'
-                  }`}
-                >
-                  <Settings2 className="w-4 h-4 inline mr-1" /> Theme
-                </button>
-              </div>
-
-              {/* Content */}
-              <div className="max-h-64 overflow-y-auto p-2">
-                {tab === 'lang' ? (
-                  LANGUAGES.map((lang) => (
-                    <button
-                      key={lang.code}
-                      onClick={() => {
-                        setLanguage(lang.code)
-                        setLang(lang.code)
-                        setIsOpen(false)
-                      }}
-                      className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-colors ${
-                        session.selectedLanguage === lang.code
-                          ? 'bg-green-600/30 text-green-300'
-                          : 'hover:bg-white/10'
-                      }`}
-                    >
-                      <span className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-sm font-bold">
-                        {lang.nativeName.charAt(0)}
-                      </span>
-                      <div>
-                        <p className="font-medium text-sm">{lang.name}</p>
-                        <p className="text-xs opacity-50">{lang.nativeName}</p>
-                      </div>
-                    </button>
-                  ))
-                ) : (
-                  THEMES.map((theme) => (
-                    <button
-                      key={theme.id}
-                      onClick={() => {
-                        setTheme(theme.id)
-                      }}
-                      className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-colors ${
-                        session.selectedTheme === theme.id
-                          ? 'bg-purple-600/30 text-purple-300'
-                          : 'hover:bg-white/10'
-                      }`}
-                    >
-                      <span className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-                        theme.id === 'light' ? 'bg-amber-100 text-amber-800' :
-                        theme.id === 'dark' ? 'bg-gray-700 text-gray-200' :
-                        'bg-green-800 text-green-300'
-                      }`}>
-                        {theme.icon}
-                      </span>
-                      <span className="font-medium text-sm">{theme.label}</span>
-                    </button>
-                  ))
-                )}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Trigger Button */}
-        <motion.button
-          whileTap={{ scale: 0.9 }}
-          onClick={() => setIsOpen(!isOpen)}
-          className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-2xl border transition-all ${
-            isOpen
-              ? 'bg-green-600 border-green-400 rotate-45'
-              : 'bg-black/60 backdrop-blur-xl border-white/20 hover:bg-black/80'
-          }`}
-        >
-          <Settings2 className="w-6 h-6" />
-        </motion.button>
-      </div>
     </>
   )
 }
