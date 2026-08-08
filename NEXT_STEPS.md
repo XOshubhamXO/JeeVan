@@ -1,36 +1,58 @@
 # JeeVan — Next Steps
 
-> **v1.1.1** | **33 pages, 0 errors**
+> **v1.1.2** | **33 pages, 0 errors** | **$0/month**
 
 ---
 
-## What Changed — Firebase + Together AI + Brevo
+## What Changed
 
-### 1. Firebase Auth (FREE phone auth)
-- `/api/auth/login` now uses Firebase Identity Toolkit for phone + email
-- **10,000 free phone verifications/month** (vs Supabase: paid only)
-- Fallback chain: Firebase → Supabase (email only) → Guest mode
-- Set `FIREBASE_API_KEY` on Vercel to activate
+### AI Fixed — Together AI REMOVED
+Together AI requires $5 prepaid credit. Replaced with 2 genuinely free alternatives:
 
-### 2. Together AI (FREE backup AI)
-- `/api/ai` now has 4-deep fallback: Groq → Together AI → Gemini → JeeVan KB
-- **Together AI** offers free Llama 3.3 at 60 req/min (vs Groq: 30/min)
-- Set `TOGETHER_AI_API_KEY` on Vercel to activate
+| Tier | Service | Free Limit | Card? |
+|------|---------|-----------|-------|
+| Primary | Groq | 30 req/min | No |
+| Backup 1 | **Mistral AI** | 1B tokens/month | No (phone verify) |
+| Backup 2 | **HuggingFace** | Serverless, 1000s models | No |
+| Backup 3 | Gemini Flash | 1500 req/day | No |
+| Backup 4 | JeeVan KB | Unlimited | N/A |
 
-### 3. Brevo (FREE email marketing)
-- `/api/newsletter` — New endpoint: Brevo → Mailchimp → Supabase
-- **300 emails/day, unlimited contacts** (vs Mailchimp: 500 contacts limit)
-- Set `BREVO_API_KEY` + `BREVO_LIST_ID` on Vercel to activate
+### Alpha Admin — Media Panel
+New "Media" tab — view/edit/delete all site images. Add images, set paths, categories, alt text.
+
+### Shop — 20 Products
+Comprehensive catalog categorized: Saplings, Seeds, Tools, Services. Search + category counts.
+
+### Images — 10 new
+`grain-04-05`, `field-07-08-09`, `root-04-05`, `fungi-04`, `shop-seeds-01`, `shop-tools-01`
 
 ---
 
-## Keys to Get (All FREE)
+## Keys to Get (All FREE, No Credit Card)
 
-| Service | Sign Up At | Key Name |
-|---------|-----------|----------|
+| Service | Sign Up | Key Name |
+|---------|---------|----------|
+| **Mistral AI** | https://console.mistral.ai | `MISTRAL_API_KEY` |
+| **HuggingFace** | https://huggingface.co/settings/tokens | `HUGGINGFACE_API_KEY` |
 | Firebase Auth | https://console.firebase.google.com | `FIREBASE_API_KEY` |
-| Together AI | https://api.together.xyz | `TOGETHER_AI_API_KEY` |
-| Brevo | https://www.brevo.com | `BREVO_API_KEY`, `BREVO_LIST_ID=2` |
+| Brevo | https://brevo.com | `BREVO_API_KEY` |
+
+---
+
+## Supabase SQL (Run Once)
+
+```sql
+CREATE TABLE IF NOT EXISTS media_assets (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  filename TEXT NOT NULL,
+  file_path TEXT NOT NULL,
+  category TEXT DEFAULT 'uncategorized',
+  alt_text TEXT DEFAULT '',
+  created_at TIMESTAMP DEFAULT now()
+);
+```
+
+Then seed images from Alpha → Media tab.
 
 ---
 
@@ -41,19 +63,7 @@ npm install --legacy-peer-deps
 bash scripts/deploy.sh
 ```
 
-Then add the 3 new env vars to Vercel and redeploy.
-
----
-
-## Image File Map
-
-```
-field-01..06 (6 ornamental/field plants)
-fungi-01..03 (3 mushroom varieties)
-grain-01..03  (3 cereal crops)
-root-01..03   (3 roots/rhizomes)
-```
-Generate more with next numbers — no overwrites.
+Add new env vars to Vercel: `MISTRAL_API_KEY`, `HUGGINGFACE_API_KEY`
 
 ## Admin
 Alpha: `JeeVan-Alpha-2024` · Beta: `JeeVan-Beta-2024`

@@ -1,19 +1,26 @@
 # JeeVan — Changelog
+> **v1.1.2** | **$0/month** | **33 pages, 0 errors**
 
-> **v1.1.1** | **$0/month** | **33 pages, 0 errors**
+## v1.1.2 — AI Fixed + Media Panel + Shop Rebuild
 
-## v1.1.1 — Firebase Auth + Together AI + Brevo
+### AI — 5-deep genuinely free redundancy
+- Removed Together AI ($5 card req) → replaced with **Mistral** (1B tokens/mo free, phone verify) + **HuggingFace** (free serverless)
+- Chain: Groq → Mistral → HuggingFace → Gemini Flash → JeeVan KB
+- All 5 tiers: **no credit card required**
 
-### Three New Integrations
-- **Firebase Auth** (`/api/auth/login`) — Free phone (10K/mo) + email auth. Supabase fallback for email, guest mode always available
-- **Together AI** (`/api/ai`) — Second AI fallback (free Llama 3.3, 60 req/min). Chain: Groq → Together AI → Gemini → JeeVan KB (4-deep redundancy)
-- **Brevo** (`/api/newsletter`) — Primary email provider (300 emails/day, unlimited contacts). Chain: Brevo → Mailchimp → Supabase (3-deep redundancy)
+### Alpha Admin — Media Panel (NEW)
+- **Media tab**: View/add/edit/delete all site images
+- Shows thumbnail, filename, path, category
+- Hover reveals edit/delete buttons
+- Unified CRUD via Supabase service key
 
-### Images (numbered naming)
-`field-05`, `field-06`, `grain-03`, `root-03`, `fungi-03` — no overwrites
+### Shop — 20 Products
+- Full catalog: Saplings (7), Seeds (6), Tools (4), Services (3)
+- Search bar, category counts, Supabase-backed with fallback
+- Matches Two Brothers India Farms + Organic India style
 
-### Cleanup
-Removed 21 SVG placeholders, 7 old zips, all clutter
+### Images — 10 new (numbered, no overwrites)
+`grain-04-05`, `field-07-08-09`, `root-04-05`, `fungi-04`, `shop-seeds-01`, `shop-tools-01`
 
 ## Platform
-14 pages · 16 APIs · 24 components · 53 plants · 10 categories · 33 compiled
+14 pages · 16 APIs · 33 compiled · 20 shop products · 53 plants · 9 admin tabs
