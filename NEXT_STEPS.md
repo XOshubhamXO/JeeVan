@@ -1,20 +1,12 @@
 # JeeVan — Next Steps
 
-> **v1.0.6** | **99.5% match** | **2026-08-08**
+> **v1.2.0** | **100% Core Complete**
 
 ---
 
-## What's in `jeevan-update-v1.0.6.zip`
+## What's in `jeevan-update-v1.2.0.zip`
 
-31 files — only changed ones. Drop into project root, overwrite.
-
-### New this version
-| File | What |
-|------|------|
-| `src/app/not-found.tsx` | Custom 404 page |
-| `public/og-image.jpg` | Social share image |
-| `public/sitemap.xml` | All 14 URLs |
-| `public/manifest.json` | PWA manifest updated |
+38 files — only changed ones. Drop into project root, overwrite.
 
 ---
 
@@ -28,78 +20,52 @@ bash scripts/deploy.sh
 
 ---
 
-## After Deploy — Vercel Env Vars
+## After Deploy — Vercel Env Vars (ALL required)
 
-Add these 5 to **Vercel → Settings → Env Vars**:
-
-1. `NEXT_PUBLIC_CLOUDINARY_VIDEO_URL` = `https://res.cloudinary.com/o93h4smq/video/upload/v1786126186/untitled_j4u4fs.mp4`
-2. `MAILCHIMP_API_KEY` = `b0b9495018c89fa28715284c34e88902`
-3. `MAILCHIMP_LIST_ID` = `10626629`
-4. `AGMARKNET_API_KEY` = `579b464db66ec23bdd000001c6e32fa41f7f48926bb7e6ddc8a252fa`
-5. `DEEPL_API_KEY` = `2e84f8ce-58a2-4c70-b57b-4b6b1b5a5a9c:fx`
-
-Then **Redeploy** on Vercel to activate all APIs.
-
----
-
-## Last 0.5% — Your Actions
-
-### 1. Razorpay Keys (when approved)
-Add to Vercel: `RAZORPAY_KEY_ID` + `RAZORPAY_KEY_SECRET`  
-Checkout at `/shop/checkout` goes live immediately.
-
-### 2. Real Farm Photos
-Replace AI-generated images in `public/`:
-
-| Current (AI) | Replace with |
-|-------------|-------------|
-| `/nalanda-aerial.jpg` | Your aerial farm shot |
-| `/hero-farm.jpg` | Main farm photo |
-| `/hero-community.jpg` | Community / people shot |
-| `/hero-crops.jpg` | Close-up of crops |
-| `/nalanda-nursery.jpg` | Nursery photo |
-| `/ventures-nursery.jpg` | Nursery venture |
-| `/ventures-gardening.jpg` | Gardening tools/action |
-| `/ventures-tech.jpg` | Tech/work setup |
-| `/ventures-studio.jpg` | Studio/creative work |
-| `/plants/*.jpg` | Real plant photos |
-| `/causes-pedal4planet.jpg` | Pedal4Planet |
-| `/causes-adira.jpg` | Adira Biocycle |
-
-### 3. Verify on Vercel
-- [ ] Landing page loads with video background
-- [ ] Language switch works (floating controller)
-- [ ] Blog articles readable at `/blog`
-- [ ] 404 page at any bad URL
-- [ ] Newsletter signup saves to Supabase
-- [ ] Share on social → OG image shows
+| Key | Value | Status |
+|-----|-------|--------|
+| `NEXT_PUBLIC_SUPABASE_URL` | `https://iylyhdddvpsckinpnyxw.supabase.co` | ✅ Set |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | *(in .env)* | ✅ Set |
+| `SUPABASE_SERVICE_ROLE_KEY` | *(in .env)* | ✅ Set |
+| `DEEPL_API_KEY` | `2e84f8ce-...` | ✅ Set |
+| `GROQ_API_KEY` | `gsk_Ul4yyy...` | ✅ Set |
+| `GOOGLE_AI_API_KEY` | `AQ.Ab8RN6I...` | ✅ Set |
+| `NEXT_PUBLIC_CLOUDINARY_VIDEO_URL` | Cloudinary MP4 URL | 🔴 Add |
+| `MAILCHIMP_API_KEY` | `b0b9495018c89fa28715284c34e88902` | 🔴 Add |
+| `MAILCHIMP_LIST_ID` | `10626629` | 🔴 Add |
+| `AGMARKNET_API_KEY` | `579b464db66ec23bdd000001c6e32fa41f7f48926bb7e6ddc8a252fa` | 🔴 Add |
+| `NEXT_PUBLIC_RAZORPAY_KEY_ID` | `rzp_live_TNHQwrr9ErYmv4` | 🔴 Add |
+| `RAZORPAY_KEY_SECRET` | `FDC14wSuysszyKkxepcl2KJl` | 🔴 Add |
 
 ---
 
-## Reference Match: 99.5%
+## Remaining — Your Only Action
 
-| Site | Our Match |
-|------|-----------|
-| **Floret** | Serif, white space, gallery |
-| **Apricot Lane** | Documentary blog, plant directory |
-| **Wicklow Way** | Deep palette, dark/nature themes |
-| **Two Brothers** | INR e-commerce, WhatsApp+Razorpay |
-| **Organic India** | 164 plants, wellness tone |
-| **Ecotyl** | Bold typography, sustainability |
+### Real Farm Photos
+Replace 16 AI-generated images in `public/` and `public/plants/` with your actual Nalanda farm photos.
+
+### Optional
+- Upload podcast MP3s → update `src/data/podcast-episodes.json`
+- Enable Email/Phone auth in Supabase Dashboard for `/login`
 
 ---
 
-## Quick Commands
+## Verify After Deploy
 
-```bash
-bash scripts/dev.sh     # → http://localhost:3000
-bash scripts/deploy.sh  # Build + push → Vercel
-bash scripts/test.sh    # E2E tests
-```
+- [ ] Homepage with video background
+- [ ] Language switch (floating controller)
+- [ ] Blog articles render with structured data
+- [ ] Podcast page shows 6 episodes
+- [ ] `/shop/checkout` — Razorpay payment modal opens
+- [ ] 404 page at `/nonexistent`
+- [ ] Newsletter signup → Supabase
+- [ ] PWA installable on mobile
+
+---
 
 ## Admin
 
-| Panel | Passkey |
-|-------|---------|
-| `/admin/alpha` | `JeeVan-Alpha-2024` |
-| `/admin/beta` | `JeeVan-Beta-2024` |
+| Panel | URL | Passkey |
+|-------|-----|---------|
+| Alpha | `/admin/alpha` | `JeeVan-Alpha-2024` |
+| Beta | `/admin/beta` | `JeeVan-Beta-2024` |
