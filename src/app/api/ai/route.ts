@@ -22,14 +22,14 @@ export async function POST(req: NextRequest) {
       const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${groqKey}` },
-        body: JSON.stringify({ model: 'llama-3.1-70b-versatile', messages, temperature: 0.7, max_tokens: 800 }),
+        body: JSON.stringify({ model: 'llama-3.3-70b-versatile', messages, temperature: 0.7, max_tokens: 800 }),
         signal: AbortSignal.timeout(25000),
       })
       if (res.ok) {
         const data = await res.json()
         return NextResponse.json({
           response: data.choices?.[0]?.message?.content,
-          model: 'Groq (Llama 3.1 70B)',
+          model: 'Groq (Llama 3.3 70B)',
           tokens: data.usage?.total_tokens,
         })
       }

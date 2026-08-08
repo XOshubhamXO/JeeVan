@@ -6,6 +6,7 @@ import { ShoppingBag } from 'lucide-react'
 import NewsletterSignup from '@/components/newsletter-signup'
 import CartDrawer from '@/components/shop/cart-drawer'
 import { useCartStore } from '@/lib/store/cart'
+import { useI18n } from '@/lib/i18n'
 
 const PRODUCTS = [
   { id:'sapling-moringa', name:'Moringa Sapling Pack (10 pcs)', category:'Saplings', price:'₹250', desc:'10 healthy Moringa oleifera saplings. Ready to plant. Grown at JeeVan Farms, Nalanda.', image:'/plants/moringa.jpg', badge:'Bestseller' },
@@ -18,12 +19,13 @@ const PRODUCTS = [
   { id:'consulting-intro', name:'Tech Consulting — Intro Session', category:'Services', price:'Free', desc:'30-min consultation. Software, web apps, PC builds, or startup advisory. By B.Tech CSE.', image:'/ventures-tech.jpg' },
 ]
 
-const CATEGORIES = ['All','Saplings','Seeds','Tools','Services']
-
 export default function ShopPage() {
   const [category, setCategory] = useState('All')
   const { addItem } = useCartStore()
-  const filtered = PRODUCTS.filter(p => category === 'All' || p.category === category)
+  const { t } = useI18n()
+
+  const CATEGORIES = [t('shop.category.all'),t('shop.category.saplings'),t('shop.category.seeds'),t('shop.category.tools'),t('shop.category.services')]
+  const filtered = PRODUCTS.filter(p => category === t('shop.category.all') || p.category === category)
 
   return (
     <div style={{background:'var(--bg-primary)',color:'var(--text-primary)'}} className="min-h-screen">
@@ -31,9 +33,9 @@ export default function ShopPage() {
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-between mb-12">
             <div className="text-center md:text-left flex-1">
-              <span className="label" style={{color:'var(--accent-green)'}}>Shop</span>
-              <h1 style={{fontFamily:'var(--font-display)'}}>JeeVan Store</h1>
-              <p className="lead mt-2 max-w-xl">Saplings, seeds, and tools — from our Nalanda farm. Add to cart, order via WhatsApp.</p>
+              <span className="label" style={{color:'var(--accent-green)'}}>{t('shop.label')}</span>
+              <h1 style={{fontFamily:'var(--font-display)'}}>{t('shop.heading')}</h1>
+              <p className="lead mt-2 max-w-xl">{t('shop.subtitle')}</p>
             </div>
             <div className="hidden md:block"><CartDrawer /></div>
           </div>
@@ -62,7 +64,7 @@ export default function ShopPage() {
                   <div className="flex items-center justify-between">
                     <span className="text-base font-bold" style={{color:'var(--accent-green)',fontFamily:'var(--font-display)'}}>{p.price}</span>
                     <button onClick={() => addItem({ id:p.id, name:p.name, price:p.price, image:p.image })} className="btn-primary text-xs px-4 py-2">
-                      <ShoppingBag className="w-3.5 h-3.5" /> Add
+                      <ShoppingBag className="w-3.5 h-3.5" /> {t('shop.add')}
                     </button>
                   </div>
                 </div>
@@ -77,14 +79,12 @@ export default function ShopPage() {
       </section>
 
       <footer className="py-12 px-6 text-center border-t" style={{borderColor:'var(--border-subtle)'}}>
-        <p className="small">JeeVan · Nalanda, Bihar · 🌱 Shubham Saurabh</p>
+        <p className="small">{t('footer.short')}</p>
         <nav className="flex justify-center gap-6 mt-3" aria-label="Footer">
-          <a href="/" className="text-xs hover:underline" style={{color:'var(--text-muted)'}}>Home</a>
-          <a href="/blog" className="text-xs hover:underline" style={{color:'var(--text-muted)'}}>Blog</a>
-          <a href="/contact" className="text-xs hover:underline" style={{color:'var(--text-muted)'}}>Contact</a>
-                <a href="/pricing" className="text-xs hover:underline" style={{color:"var(--text-muted)"}}>Pricing</a>
-                <a href="/blog" className="text-xs hover:underline" style={{color:"var(--text-muted)"}}>Blog</a>
-                <a href="/shop" className="text-xs hover:underline" style={{color:"var(--text-muted)"}}>Shop</a>
+          <a href="/" className="text-xs hover:underline" style={{color:'var(--text-muted)'}}>{t('nav.home')}</a>
+          <a href="/blog" className="text-xs hover:underline" style={{color:'var(--text-muted)'}}>{t('nav.blog')}</a>
+          <a href="/contact" className="text-xs hover:underline" style={{color:'var(--text-muted)'}}>{t('nav.contact')}</a>
+          <a href="/pricing" className="text-xs hover:underline" style={{color:'var(--text-muted)'}}>{t('nav.pricing')}</a>
         </nav>
       </footer>
     </div>

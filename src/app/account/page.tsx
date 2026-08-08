@@ -5,10 +5,12 @@ import { motion } from 'framer-motion'
 import { User, Mail, Phone, Globe, Sprout, LogOut, Save, Check, ShoppingBag, Heart } from 'lucide-react'
 import { useAuthStore, type User as UserType } from '@/lib/store/auth'
 import { useUserStore } from '@/lib/store'
+import { useI18n } from '@/lib/i18n'
 
 export default function AccountPage() {
   const { user, isAuthenticated, login, updateProfile, logout } = useAuthStore()
   const { session } = useUserStore()
+  const { t } = useI18n()
   const [editing, setEditing] = useState(false)
   const [form, setForm] = useState<UserType>({
     id: Date.now().toString(),
@@ -23,7 +25,6 @@ export default function AccountPage() {
   })
   const [saved, setSaved] = useState(false)
 
-  // Auto-login from session if available
   React.useEffect(() => {
     if (session.onboardingCompleted && !isAuthenticated) {
       login({ ...form, name: session.name || 'Friend', country: session.countryName || 'India', language: session.selectedLanguage || 'en', theme: session.selectedTheme || 'nature' })
@@ -38,7 +39,13 @@ export default function AccountPage() {
   }
 
   const interests = ['natural_produce','nursery_plants','tech_consulting','partnerships','social_causes']
-  const interestLabels: Record<string,string> = { natural_produce:'Natural Produce', nursery_plants:'Nursery Plants', tech_consulting:'Tech Consulting', partnerships:'Partnerships', social_causes:'Social Causes' }
+  const interestLabels: Record<string,string> = {
+    natural_produce: t('survey.natural_produce'),
+    nursery_plants: t('survey.nursery_plants'),
+    tech_consulting: t('survey.tech_consulting'),
+    partnerships: t('survey.partnerships'),
+    social_causes: t('survey.social_causes'),
+  }
 
   return (
     <div style={{background:'var(--bg-primary)',color:'var(--text-primary)'}} className="min-h-screen">
@@ -48,19 +55,19 @@ export default function AccountPage() {
             <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold" style={{background:'var(--bg-secondary)',border:'2px solid var(--accent-green)',color:'var(--accent-green)',fontFamily:'var(--font-display)'}}>
               {(user?.name || 'U')[0].toUpperCase()}
             </div>
-            <h1 style={{fontFamily:'var(--font-display)'}}>My Account</h1>
+            <h1 style={{fontFamily:'var(--font-display)'}}>{t('account.heading')}</h1>
             <p className="text-sm mt-2" style={{color:'var(--text-muted)'}}>Member since {user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'today'}</p>
           </div>
 
           {saved && (
             <motion.div initial={{opacity:0,y:-10}} animate={{opacity:1,y:0}} className="mb-6 px-4 py-3 rounded-lg text-center text-sm flex items-center justify-center gap-2" style={{background:'rgba(90,158,75,0.1)',border:'1px solid rgba(90,158,75,0.2)',color:'var(--accent-green)'}}>
-              <Check className="w-4 h-4" /> Profile updated
+              <Check className="w-4 h-4" /> {t('account.saved')}
             </motion.div>
           )}
 
           <div className="card p-6 space-y-6">
             <div className="flex items-center justify-between">
-              <h2 className="font-semibold flex items-center gap-2"><User className="w-4 h-4" /> Profile</h2>
+              <h2 className="font-semibold flex items-center gap-2"><User className="w-4 h-4" /> {t('account.profile')}</h2>
               <button onClick={() => setEditing(!editing)} className="text-xs" style={{color:'var(--accent-green)'}}>
                 {editing ? 'Cancel' : 'Edit'}
               </button>
@@ -110,7 +117,7 @@ export default function AccountPage() {
 
             {editing && (
               <button onClick={handleSave} className="btn-primary w-full justify-center">
-                <Save className="w-4 h-4" /> Save Changes
+                <Save className="w-4 h-4" /> {t('account.save')}
               </button>
             )}
           </div>
@@ -118,7 +125,7 @@ export default function AccountPage() {
           <div className="grid grid-cols-2 gap-4 mt-6">
             <a href="/shop" className="card p-4 text-center hover-lift">
               <ShoppingBag className="w-6 h-6 mx-auto mb-2" style={{color:'var(--accent-green)'}} />
-              <p className="text-xs font-medium">My Orders</p>
+              <p className="text-xs font-medium">{t('account.orders')}</p>
             </a>
             <a href="/contact" className="card p-4 text-center hover-lift">
               <Heart className="w-6 h-6 mx-auto mb-2" style={{color:'var(--accent-green)'}} />
@@ -128,7 +135,7 @@ export default function AccountPage() {
 
           <div className="mt-6 text-center">
             <button onClick={logout} className="btn-ghost text-xs" style={{color:'var(--text-muted)'}}>
-              <LogOut className="w-3.5 h-3.5 mr-1" /> Sign Out
+              <LogOut className="w-3.5 h-3.5 mr-1" /> {t('account.logout')}
             </button>
           </div>
         </div>

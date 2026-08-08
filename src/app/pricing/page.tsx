@@ -3,23 +3,26 @@
 import React from 'react'
 import { Check, Sprout, Wrench, Monitor, Camera, ArrowRight } from 'lucide-react'
 import NewsletterSignup from '@/components/newsletter-signup'
-
-const PLANS = [
-  { name:'Nursery', icon:<Sprout className="w-6 h-6"/>, color:'var(--accent-green)', items:['10 Moringa saplings','5 Neem saplings','3 Mango grafts','2 Papaya plants','Free planting guide','WhatsApp support','Delivery across India'], price:'Starts at ₹250' },
-  { name:'Gardening', icon:<Wrench className="w-6 h-6"/>, color:'var(--accent-gold)', items:['Rooftop garden setup','Living lawn design','Composting system','Tool rental','Soil testing','Monthly maintenance','2 site visits'], price:'Custom quote' },
-  { name:'Tech', icon:<Monitor className="w-6 h-6"/>, color:'var(--accent-sage)', items:['Web app development','Mobile app development','PC build architecture','Startup infrastructure','Code review','Technical documentation','Flexible hours'], price:'Custom quote' },
-  { name:'Studio', icon:<Camera className="w-6 h-6"/>, color:'#8a5a9e', items:['Photography session','Video production','Content creation','Event coverage','Drone shots','Post-production','Raw files included'], price:'Starts at ₹1,500' },
-]
+import { useI18n } from '@/lib/i18n'
 
 export default function PricingPage() {
+  const { t } = useI18n()
+
+  const PLANS = [
+    { name:t('venture.nursery'), icon:<Sprout className="w-6 h-6"/>, color:'var(--accent-green)', items:['10 Moringa saplings','5 Neem saplings','3 Mango grafts','2 Papaya plants','Free planting guide','WhatsApp support','Delivery across India'], price:'Starts at ₹250' },
+    { name:t('venture.gardening'), icon:<Wrench className="w-6 h-6"/>, color:'var(--accent-gold)', items:['Rooftop garden setup','Living lawn design','Composting system','Tool rental','Soil testing','Monthly maintenance','2 site visits'], price:'Custom quote' },
+    { name:t('venture.tech'), icon:<Monitor className="w-6 h-6"/>, color:'var(--accent-sage)', items:['Web app development','Mobile app development','PC build architecture','Startup infrastructure','Code review','Technical documentation','Flexible hours'], price:'Custom quote' },
+    { name:t('venture.studio'), icon:<Camera className="w-6 h-6"/>, color:'#8a5a9e', items:['Photography session','Video production','Content creation','Event coverage','Drone shots','Post-production','Raw files included'], price:'Starts at ₹1,500' },
+  ]
+
   return (
     <div style={{background:'var(--bg-primary)',color:'var(--text-primary)'}} className="min-h-screen">
       <section className="py-24 md:py-32 px-6 md:px-10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <span className="label" style={{color:'var(--accent-green)'}}>Pricing</span>
-            <h1 style={{fontFamily:'var(--font-display)'}}>What We Offer</h1>
-            <p className="lead mt-3 max-w-xl mx-auto">Simple, transparent pricing across all our ventures. Custom quotes for larger projects.</p>
+            <span className="label" style={{color:'var(--accent-green)'}}>{t('pricing.label')}</span>
+            <h1 style={{fontFamily:'var(--font-display)'}}>{t('pricing.heading')}</h1>
+            <p className="lead mt-3 max-w-xl mx-auto">{t('pricing.subtitle')}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             {PLANS.map(plan => (
@@ -34,7 +37,7 @@ export default function PricingPage() {
                     </li>
                   ))}
                 </ul>
-                <a href="/contact" className="btn-secondary w-full justify-center text-xs">Get Started <ArrowRight className="w-3.5 h-3.5" /></a>
+                <a href="/contact" className="btn-secondary w-full justify-center text-xs">{t('pricing.cta')} <ArrowRight className="w-3.5 h-3.5" /></a>
               </div>
             ))}
           </div>

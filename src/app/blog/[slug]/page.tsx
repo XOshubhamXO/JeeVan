@@ -6,9 +6,36 @@ import posts from '@/data/blog-posts.json'
 import ReadingProgress from '@/components/reading-progress'
 import NewsletterSignup from '@/components/newsletter-signup'
 import { ArrowLeft, Clock, Calendar, User } from 'lucide-react'
+import { useI18n } from '@/lib/i18n'
+
+/* Simple markdown-to-JSX renderer */
+function renderContent(content: string) {
+  const blocks = content.split('\n\n')
+  return blocks.map((block, i) => {
+    if (block.startsWith('### ')) {
+      return <h3 key={i} className="text-xl font-bold mt-8 mb-3" style={{fontFamily:'var(--font-display)',color:'var(--text-primary)'}}>{block.slice(4)}</h3>
+    }
+    if (block.startsWith('**')) {
+      return <p key={i} className="font-semibold mt-5 mb-2" style={{color:'var(--text-primary)'}}>{block.replace(/\*\*/g, '')}</p>
+    }
+    const text = block
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n- /g, '\n• ')
+      .split('\n')
+      .map((line) => {
+        if (line.startsWith('• ')) {
+          return `<li class="ml-4 list-disc">${line.slice(2)}</li>`
+        }
+        return line
+      })
+      .join('<br/>')
+    return <p key={i} className="mb-4 leading-relaxed" style={{color:'var(--text-secondary)'}} dangerouslySetInnerHTML={{__html: text}} />
+  })
+}
 
 export default function BlogPostPage() {
   const params = useParams()
+  const { t } = useI18n()
   const slug = params?.slug as string
   const post = posts.find(p => p.slug === slug)
   const related = posts.filter(p => p.slug !== slug).slice(0, 3)
@@ -18,7 +45,7 @@ export default function BlogPostPage() {
       <div style={{background:'var(--bg-primary)',color:'var(--text-primary)'}} className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 style={{fontFamily:'var(--font-display)'}}>Article Not Found</h1>
-          <a href="/blog" className="btn-primary mt-4">← Back to Blog</a>
+          <a href="/blog" className="btn-primary mt-4">← {t('nav.blog')}</a>
         </div>
       </div>
     )
@@ -30,7 +57,7 @@ export default function BlogPostPage() {
       <article className="py-24 md:py-32 px-6 md:px-10">
         <div className="max-w-3xl mx-auto">
           <a href="/blog" className="inline-flex items-center gap-2 text-sm mb-8 hover:underline" style={{color:'var(--text-muted)'}}>
-            <ArrowLeft className="w-4 h-4" /> Back to Blog
+            <ArrowLeft className="w-4 h-4" /> {t('nav.blog')}
           </a>
           <div className="flex items-center gap-4 text-[11px] mb-4" style={{color:'var(--text-muted)'}}>
             <span className="badge-green">{post.category}</span>
@@ -40,11 +67,18 @@ export default function BlogPostPage() {
           </div>
           <h1 className="text-3xl md:text-5xl mb-6" style={{fontFamily:'var(--font-display)',lineHeight:1.2}}>{post.title}</h1>
           {post.image && <div className="h-64 md:h-96 rounded-2xl overflow-hidden mb-10 bg-cover bg-center" style={{backgroundImage:`url(${post.image})`}} />}
-          <div className="space-y-4" style={{color:'var(--text-secondary)',lineHeight:1.9}}>
-            <p className="text-lg">{post.excerpt}</p>
-            <p>This article is part of the JeeVan Blog — stories, guides, and farming wisdom from the fields of Nalanda, Bihar.</p>
+
+          {/* Article Content */}
+          <div className="article-content text-base max-w-none">
+            {post.content ? renderContent(post.content) : (
+              <div className="space-y-4" style={{color:'var(--text-secondary)',lineHeight:1.9}}>
+                <p className="text-lg">{post.excerpt}</p>
+                <p>This article is part of the JeeVan Blog — stories, guides, and farming wisdom from the fields of Nalanda, Bihar.</p>
+              </div>
+            )}
           </div>
-          <div className="flex flex-wrap gap-2 mt-8">
+
+          <div className="flex flex-wrap gap-2 mt-10">
             {post.tags.map(tag => (
               <span key={tag} className="px-3 py-1 rounded-full text-[10px] capitalize" style={{background:'var(--bg-secondary)',border:'1px solid var(--border-subtle)',color:'var(--text-muted)'}}>{tag}</span>
             ))}

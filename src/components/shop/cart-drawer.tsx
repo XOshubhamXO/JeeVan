@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ShoppingBag, X, Plus, Minus, Trash2, MessageCircle } from 'lucide-react'
+import { ShoppingBag, X, Plus, Minus, Trash2, MessageCircle, CreditCard } from 'lucide-react'
 import { useCartStore } from '@/lib/store/cart'
 
 export default function CartDrawer() {
@@ -72,7 +72,10 @@ export default function CartDrawer() {
                     <span className="text-sm">Total</span>
                     <span className="text-lg font-bold" style={{color:'var(--accent-green)',fontFamily:'var(--font-display)'}}>{totalPrice()}</span>
                   </div>
-                  <button onClick={handleCheckout} className="btn-primary w-full justify-center">
+                  <a href="/shop/checkout" className="btn-primary w-full justify-center inline-flex">
+                    <CreditCard className="w-4 h-4" /> Pay Online
+                  </a>
+                  <button onClick={handleCheckout} className="btn-secondary w-full justify-center">
                     <MessageCircle className="w-4 h-4" /> Order via WhatsApp
                   </button>
                   <button onClick={clearCart} className="btn-ghost w-full text-xs" style={{color:'var(--text-muted)'}}>Clear cart</button>
