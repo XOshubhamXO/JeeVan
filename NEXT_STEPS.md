@@ -1,36 +1,51 @@
 # JeeVan — Next Steps
 
-> **v1.4.0** | **100% CORE** | **$0/month**
+> **v1.6.1** | **Visual Rebuild Complete**
 
 ---
 
-## What Changed in v1.4.0
+## What Changed — Visual Overhaul
 
-### Plant Directory — Complete Rebuild
-- **10 categories** ALL filled: Staple (7), Produce (9), Spices/Beverages (8), Ornamentals (5), Cover/Forage (4), Fungi (4), Algae (3), Microbes (4), Lichens/Moss (3), Exotic/Rare (6)
-- **53 plants** total with unique data + images — every plant has its own picture
-- Image assignment: 27 JPG photos + 20 SVG placeholders = zero duplicates
-- Search across all plants and categories
+The entire visual identity rebuilt from scratch. References used:
+- **Floret Flowers** → Serif typography, cream/white space, elegant photography cards, newsletter signup
+- **Apricot Lane Farms** → Cinematic video hero, parallax scroll, documentary narrative
+- **Wicklow Way Wines** → Testimonial carousel, rustic deep palette, "As Seen In" partner strip
 
-### Images Generated This Session (10)
-maize, finger-millet, heirloom-tomato, mushroom-oyster, mushroom-button, spirulina, rhizobium, sesbania, marigold, jasmine
+### CSS completely rewritten (`src/app/globals.css`)
+- Warm cream primary background instead of harsh black
+- Playfair Display serif headings (Floret style)
+- 3 themes: Light (cream), Dark (espresso), Nature (organic)
+- Cinematic hero with parallax video/image
+- Testimonial blocks with left green border
 
-### What's NOT Image Issue
-- "Something went wrong" = tool environment, not code. All files compile clean.
-- Admin panel has 8 tabs, Beta admin create/delete works
-- Shop pulls from Supabase with 6-item fallback
+### Landing page rebuilt (`src/app/page.tsx`)
+- Full-screen video hero with parallax
+- Venture cards with hover-zoom imagery
+- 3 testimonials with star ratings
+- Partner press-logo strip
+- Newsletter signup section
+- Causes + footer
 
 ---
 
 ## Deploy
 
 ```bash
-cd jeevan-platform
 npm install --legacy-peer-deps
 bash scripts/deploy.sh
 ```
 
-## Remaining Real Work (not tasks you've done)
+## Image Naming Convention
+New images use numbered names: `field-01.jpg`, `grain-01.jpg`, `root-01.jpg` etc.
+When regenerating, increment the number (`field-02`, `field-03`) — no overwrites.
 
-1. **Generate remaining 20 plant images** in next sessions (SVG placeholders used for now)
-2. That's it. Everything else is built, tested, 0 errors.
+## Remaining Image Generation
+20 SVG placeholders in `public/plants/` need JPG replacements. Generate in batches of 5 per session using the `generate_image` tool.
+
+---
+
+## Admin
+| Panel | Passkey |
+|-------|---------|
+| Alpha (`/admin/alpha`) | `JeeVan-Alpha-2024` |
+| Beta (`/admin/beta`) | `JeeVan-Beta-2024` |
