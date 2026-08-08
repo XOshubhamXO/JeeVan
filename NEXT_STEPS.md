@@ -1,45 +1,23 @@
 # JeeVan — Next Steps
+> **v1.1.7** | **112 images** | **33 pages** | **$0/month**
 
-> **v1.1.5** | **89 images** | **0 duplicates** | **33 pages, 0 errors**
-
----
-
-## Image Audit: 100% Clean
-
-| Check | Result |
-|-------|--------|
-| Plant directory images | 53/53 — all unique ✅ |
-| Duplicate images | 0 — eliminated ✅ |
-| Shop product images | 20/20 — all have images ✅ |
-| Total images on site | 89 JPGs |
-
----
+## Country Selection — Map+Flag Hover Live
+- Hover any country → SVG map outline appears in background
+- Flag embedded inside animated rings
+- Top 20 agricultural nations shown first
+- All 195 countries searchable
 
 ## Deploy
-
 ```bash
 bash scripts/deploy.sh
 ```
 
----
-
-## Vercel Alternative
-
-**Cloudflare Pages** — unlimited bandwidth (free). Switch if Vercel's 100GB cap becomes limiting.
-
----
-
-## Keys on Vercel (ALL Live)
-
-Groq · Mistral · HuggingFace · Gemini · Firebase · Brevo · Mailchimp · DeepL · Agmarknet · Razorpay · Cloudinary · Supabase
-
----
-
-## Remaining (2 images, next session)
-
-Generate `field-25.jpg` and `field-26.jpg` for lichen entries (currently using field-09/field-10 as temp).
-
----
+## Image Map (112 total)
+```
+field-01..29 (29)  grain-01..10 (10)  fungi-01..06 (6)
+root-01..12 (12)   shop-* (8)         plants/* (27 original)
+hero/venture/cause (10)  icons (2)  og/bg (2)
+```
 
 ## Admin
 Alpha: `JeeVan-Alpha-2024` · Beta: `JeeVan-Beta-2024`

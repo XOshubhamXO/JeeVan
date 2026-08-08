@@ -81,8 +81,8 @@ const PLANTS: Record<string,Plant[]> = {
   ],
   lichens: [
     {name:'Reindeer Moss',botanical:'Cladonia rangiferina',origin:'Arctic/Tundra',climate:'Cold temperate',days:0,desc:'Caribou food. Excellent moisture-retaining mulch.',image:'/plants/field-24.jpg'},
-    {name:'Old Man\'s Beard',botanical:'Usnea barbata',origin:'Ancient forests',climate:'Humid temperate',days:0,desc:'Air-quality bio-indicator. Medicinal usnic acid.',image:'/plants/field-09.jpg'},
-    {name:'Sphagnum Moss',botanical:'Sphagnum palustre',origin:'Boreal wetlands',climate:'Cool humid',days:0,desc:'Holds 20x weight in water. Seed starting medium.',image:'/plants/field-10.jpg'},
+    {name:'Old Man\'s Beard',botanical:'Usnea barbata',origin:'Ancient forests',climate:'Humid temperate',days:0,desc:'Air-quality bio-indicator. Medicinal usnic acid.',image:'/plants/field-25.jpg'},
+    {name:'Sphagnum Moss',botanical:'Sphagnum palustre',origin:'Boreal wetlands',climate:'Cool humid',days:0,desc:'Holds 20x weight in water. Seed starting medium.',image:'/plants/field-26.jpg'},
   ],
   exotic: [
     {name:'Katarani Rice',botanical:'Oryza sativa (Magahi)',origin:'Nalanda, Bihar',climate:'Tropical',days:130,desc:'Heirloom aromatic rice. Only 100 acres remaining.',image:'/plants/grain-01.jpg'},

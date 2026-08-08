@@ -9,26 +9,31 @@ import { useCartStore } from '@/lib/store/cart'
 import { useI18n } from '@/lib/i18n'
 
 const FALLBACK = [
-  { id:'s1',name:'Moringa Sapling Pack (10 pcs)',category:'Saplings',price:'250',desc:'Healthy Moringa oleifera. Ready to plant. Grown at JeeVan Farms.',image:'/plants/moringa.jpg',badge:'Bestseller' },
-  { id:'s2',name:'Neem Sapling Pack (5 pcs)',category:'Saplings',price:'180',desc:'Natural pesticide tree. Organic grown.',image:'/plants/neem.jpg' },
-  { id:'s3',name:'Mango Grafted Plant (Malda)',category:'Saplings',price:'350',desc:'Premium Bihar Malda mango. Fruits in 2 years.',image:'/plants/mango.jpg',badge:'Premium' },
-  { id:'s4',name:'Tulsi Seeds — Rama & Krishna',category:'Seeds',price:'60',desc:'200+ seeds. Medicinal adaptogenic herb.',image:'/plants/tulsi.jpg' },
-  { id:'s5',name:'Turmeric Rhizomes (Organic)',category:'Seeds',price:'120',desc:'High curcumin variety. 1 kg pack.',image:'/plants/turmeric.jpg' },
-  { id:'s6',name:'Heirloom Tomato Seeds',category:'Seeds',price:'80',desc:'Non-hybrid. Superior flavor. Seed-saving variety.',image:'/plants/heirloom-tomato.jpg',badge:'New' },
-  { id:'s7',name:'Magahi Paan Sapling',category:'Saplings',price:'200',desc:'Authentic Nalanda betel leaf. Bareja-grown.',image:'/plants/magahi-paan.jpg',badge:'Heritage' },
-  { id:'s8',name:'Home Composting Starter Kit',category:'Tools',price:'450',desc:'Bin + accelerator + guide. Turn waste to gold.',image:'/shop-tools-01.jpg',badge:'New' },
-  { id:'s9',name:'Garden Tool Set (5 pcs)',category:'Tools',price:'680',desc:'Professional grade. Trowel, pruner, weeder, fork, spray.',image:'/shop-tools-01.jpg' },
-  { id:'s10',name:'Organic Vermicompost (5 kg)',category:'Tools',price:'299',desc:'Rich earthworm compost from JeeVan farm.',image:'/nalanda-hands.jpg' },
-  { id:'s11',name:'Seed Starting Kit',category:'Tools',price:'550',desc:'Tray, coco peat, labels, spray bottle. Complete.',image:'/shop-seeds-01.jpg' },
-  { id:'s12',name:'Tech Consulting — Intro Session',category:'Services',price:'0',desc:'30-min consultation. Software, PC builds, startup advice.',image:'/ventures-tech.jpg',badge:'Free' },
-  { id:'s13',name:'Photography Session',category:'Services',price:'1500',desc:'Professional farm/product photography. 2-hour session.',image:'/ventures-studio.jpg' },
-  { id:'s14',name:'Garden Design Consultation',category:'Services',price:'500',desc:'Rooftop garden, lawn, or terrace design plan.',image:'/ventures-gardening.jpg' },
-  { id:'s15',name:'Banana Tissue Culture (G9)',category:'Saplings',price:'35',desc:'Disease-free G9 banana. High yield variety.',image:'/plants/banana.jpg' },
-  { id:'s16',name:'Papaya Red Lady Seeds',category:'Seeds',price:'100',desc:'High-yielding hybrid. 100 seeds per pack.',image:'/plants/papaya.jpg' },
-  { id:'s17',name:'Guava Allahabad Safeda',category:'Saplings',price:'250',desc:'Year-round fruiting. Sweet white flesh.',image:'/plants/guava.jpg' },
-  { id:'s18',name:'Ginger Rhizomes (1 kg)',category:'Seeds',price:'150',desc:'Organic planting rhizomes. High germination.',image:'/plants/ginger.jpg' },
-  { id:'s19',name:'Oyster Mushroom Spawn',category:'Seeds',price:'200',desc:'Ready-to-grow spawn. Fruits on agri-waste.',image:'/plants/oyster-mushroom.jpg',badge:'Unique' },
-  { id:'s20',name:'Lemon Plant (Kagzi)',category:'Saplings',price:'180',desc:'Year-round fruiting citrus. Grafted variety.',image:'/plants/lemon.jpg' },
+  { id:"s1",name:"Moringa Sapling Pack (10 pcs)",category:"Saplings",price:"250",desc:"Healthy Moringa oleifera. Ready to plant.",image:"/plants/moringa.jpg",badge:"Bestseller" },
+  { id:"s2",name:"Neem Sapling Pack (5 pcs)",category:"Saplings",price:"180",desc:"Natural pesticide tree. Organic grown.",image:"/plants/neem.jpg" },
+  { id:"s3",name:"Mango Grafted Plant (Malda)",category:"Saplings",price:"350",desc:"Premium Bihar Malda mango. Fruits in 2 years.",image:"/plants/mango.jpg",badge:"Premium" },
+  { id:"s4",name:"Tulsi Seeds - Rama and Krishna",category:"Seeds",price:"60",desc:"200+ seeds. Medicinal adaptogenic herb.",image:"/plants/tulsi.jpg" },
+  { id:"s5",name:"Turmeric Rhizomes (Organic)",category:"Seeds",price:"120",desc:"High curcumin variety. 1 kg pack.",image:"/plants/turmeric.jpg" },
+  { id:"s6",name:"Heirloom Tomato Seeds",category:"Seeds",price:"80",desc:"Non-hybrid. Superior flavor. Seed-saving.",image:"/plants/heirloom-tomato.jpg",badge:"New" },
+  { id:"s7",name:"Magahi Paan Sapling",category:"Saplings",price:"200",desc:"Authentic Nalanda betel leaf. Bareja-grown.",image:"/plants/magahi-paan.jpg",badge:"Heritage" },
+  { id:"s8",name:"Home Composting Starter Kit",category:"Tools",price:"450",desc:"Bin + accelerator + guide. Turn waste to gold.",image:"/shop-tools-01.jpg",badge:"New" },
+  { id:"s9",name:"Garden Tool Set (5 pcs)",category:"Tools",price:"680",desc:"Professional grade. Trowel, pruner, weeder.",image:"/shop-tools-01.jpg" },
+  { id:"s10",name:"Organic Vermicompost (5 kg)",category:"Tools",price:"299",desc:"Rich earthworm compost from JeeVan farm.",image:"/shop-compost-01.jpg" },
+  { id:"s11",name:"Seed Starting Kit",category:"Tools",price:"550",desc:"Tray, coco peat, labels, spray bottle.",image:"/shop-seeds-01.jpg" },
+  { id:"s12",name:"Tech Consulting - Intro",category:"Services",price:"0",desc:"30-min consultation. Software, PC builds.",image:"/ventures-tech.jpg",badge:"Free" },
+  { id:"s13",name:"Photography Session",category:"Services",price:"1500",desc:"Professional farm photography. 2 hours.",image:"/ventures-studio.jpg" },
+  { id:"s14",name:"Garden Design Consultation",category:"Services",price:"500",desc:"Rooftop, lawn, or terrace design plan.",image:"/ventures-gardening.jpg" },
+  { id:"s15",name:"Banana Tissue Culture (G9)",category:"Saplings",price:"35",desc:"Disease-free G9 banana. High yield.",image:"/plants/banana.jpg" },
+  { id:"s16",name:"Papaya Red Lady Seeds",category:"Seeds",price:"100",desc:"High-yielding hybrid. 100 seeds per pack.",image:"/plants/papaya.jpg" },
+  { id:"s17",name:"Guava Allahabad Safeda",category:"Saplings",price:"250",desc:"Year-round fruiting. Sweet white flesh.",image:"/plants/guava.jpg" },
+  { id:"s18",name:"Ginger Rhizomes (1 kg)",category:"Seeds",price:"150",desc:"Organic planting rhizomes.",image:"/plants/ginger.jpg" },
+  { id:"s19",name:"Oyster Mushroom Spawn",category:"Seeds",price:"200",desc:"Ready-to-grow on agri-waste.",image:"/plants/oyster-mushroom.jpg",badge:"Unique" },
+  { id:"s20",name:"Lemon Plant (Kagzi)",category:"Saplings",price:"180",desc:"Year-round fruiting citrus. Grafted.",image:"/plants/lemon.jpg" },
+  { id:"s21",name:"Terracotta Pot Set (3 pcs)",category:"Tools",price:"350",desc:"Handcrafted clay pots. Artisan made.",image:"/shop-pots-01.jpg",badge:"New" },
+  { id:"s22",name:"Organic Fertilizer Pack",category:"Tools",price:"499",desc:"Neem cake + bone meal + vermicompost.",image:"/shop-fertilizer-01.jpg" },
+  { id:"s23",name:"Farming Guide Book Bundle",category:"Tools",price:"899",desc:"Organic farming + composting guides.",image:"/shop-books-01.jpg" },
+  { id:"s24",name:"Garden Drip Irrigation Kit",category:"Tools",price:"1200",desc:"Complete kit for 50 plants with timer.",image:"/shop-tools-02.jpg",badge:"Premium" },
+  { id:"s25",name:"Moringa Powder (500g)",category:"Services",price:"299",desc:"Organic leaf powder. JeeVan farm grown.",image:"/shop-compost-01.jpg" }
 ]
 
 export default function ShopPage() {
@@ -50,7 +55,7 @@ export default function ShopPage() {
     if (search && !p.name.toLowerCase().includes(search.toLowerCase()) && !p.desc.toLowerCase().includes(search.toLowerCase())) return false
     return true
   })
-  const fmt = (price:string) => price === '0' ? 'Free' : '₹' + price
+  const fmt = (price:string) => price === '0' ? 'Free' : '\u20B9' + price
 
   return (
     <div style={{background:'var(--bg-primary)',color:'var(--text-primary)'}} className="min-h-screen">
@@ -64,16 +69,13 @@ export default function ShopPage() {
             </div>
             <div className="hidden md:block"><CartDrawer /></div>
           </div>
-
           <div className="relative max-w-md mb-8">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{color:'var(--text-muted)'}}/>
-            <input type="text" value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search 20+ products..." className="input" style={{paddingLeft:'2.75rem'}}/>
+            <input type="text" value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search 25 products..." className="input" style={{paddingLeft:'2.75rem'}}/>
           </div>
-
           <div className="flex flex-wrap justify-center gap-2 mb-10">
             {CATS.map(c=>(<button key={c} onClick={()=>setCategory(c)} className={`px-4 py-2 rounded-full text-xs font-medium transition-all ${category===c?'bg-green-600/20 border border-green-500/30 text-green-300':'border text-white/40'}`} style={category===c?{}:{borderColor:'var(--border-subtle)'}}>{c} ({c==='All'?products.length:products.filter(p=>p.category===c).length})</button>))}
           </div>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {filtered.map((p,i)=>(
               <motion.div key={p.id} initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} transition={{delay:i*0.04}} className="card overflow-hidden group hover-lift relative">
