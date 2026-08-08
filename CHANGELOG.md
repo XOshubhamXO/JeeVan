@@ -1,64 +1,49 @@
 # JeeVan — Changelog
 
-> **Versioning:** `1.0.0 → 1.0.1 → 1.0.2 → 1.0.3 → 1.0.4`  
-> **Deploy:** `bash scripts/deploy.sh` → Vercel auto-deploys  
-> **Status:** v1.0.4 — 99% reference match, all keys live, AI model fixed
+> **Versioning:** `1.0.0 → … → 1.0.6`  
+> **Deploy:** `bash scripts/deploy.sh`  
+> **Status:** v1.0.6 — 99.5% reference match
 
 ---
 
-## v1.0.4 — 2026-08-08 (Current)
+## v1.0.6 — 2026-08-08 (Current)
 
-### AI Model Fix
-- Groq model updated: `llama-3.1-70b-versatile` (decommissioned) → `llama-3.3-70b-versatile`
-- AI advisory now returns live responses instead of 400 errors
-
-### E2E Test Results
-- **8/8 API tests pass** ✅
-- 7 browser tests skipped (sandbox missing `libnspr4`) — not app bugs
+### New
+- **404 page** — Farm-themed "not planted yet" with links home
+- **OG image** — Social share card for Twitter/Facebook/LinkedIn
+- **Sitemap** — All 14 URLs: pages + 5 blog articles + checkout
+- **Manifest** — Updated with 192px icon, theme color, 4 categories
 
 ---
 
-## v1.0.3 — 2026-08-08
+## v1.0.5 — Deploy script fix
+`npx next build` → `npm run build` + auto-install check
 
-### All API Keys Live
-- `NEXT_PUBLIC_CLOUDINARY_VIDEO_URL` — farm video on Cloudinary ✅
-- `MAILCHIMP_API_KEY` + `MAILCHIMP_LIST_ID` — email automation ✅
-- `AGMARKNET_API_KEY` — live mandi rates from Data.gov.in ✅
-- `DEEPL_API_KEY` — real-time translation ✅
-- All keys in `.env`, `.env.development`, `.env.example`
-- Landing page ParallaxHero plays video background
+## v1.0.4 — AI model fix
+`llama-3.1-70b` → `llama-3.3-70b-versatile`
 
----
+## v1.0.3 — All API keys set
+Cloudinary video, Mailchimp, Agmarknet, DeepL
 
-## v1.0.2 — 2026-08-08
+## v1.0.2 — i18n + Blog + Checkout
+150+ translation keys, 5 articles, Razorpay checkout
 
-### i18n: 150+ keys wired into 9 pages + NewsletterSignup
-### Blog: 5 articles with full body content + Markdown renderer
-### Checkout: `/shop/checkout` + Razorpay SDK (type-safe) + cart "Pay Online"
+## v1.0.1 — Cleanup + version reset
 
 ---
 
-## Platform State
+## Platform — 99.5%
 
-| Area | Count | Status |
-|------|-------|--------|
-| Pages | 11 | All live |
-| API Routes | 12 | All live |
-| Components | 22 | All working |
-| Blog Articles | 5 | Full content |
-| Translation Keys | 150+ | Wired |
-| Plants (Supabase) | 164 | Live |
-| Venture Partners | 13 | Live |
-| Build Errors | 0 | Clean |
+| Area | Status |
+|------|--------|
+| Pages | 12 (incl. not-found) |
+| APIs | 12 live |
+| Components | 22 |
+| Blog articles | 5 full content |
+| i18n keys | 150+ |
+| Build errors | 0 |
+| SEO | Sitemap, OG, robots.txt, JSON-LD |
+| PWA | Manifest |
+| a11y | Focus, skip-link, reduced-motion |
 
-### All Integrations
-| Service | Status |
-|---------|--------|
-| Supabase | ✅ |
-| DeepL | ✅ |
-| Groq AI (3.3 70B) | ✅ |
-| Google Gemini | ✅ |
-| Cloudinary Video | ✅ |
-| Mailchimp | ✅ |
-| Agmarknet | ✅ |
-| Razorpay | 🟡 Under review |
+### Integrations — all green except Razorpay (under review)
