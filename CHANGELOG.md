@@ -1,28 +1,19 @@
 # JeeVan — Changelog
 
-> **v1.1.0** | **$0/month** | **32 pages, 0 errors**
+> **v1.1.1** | **$0/month** | **33 pages, 0 errors**
 
-## v1.1.0 — Complete Visual Rebuild + Tech Audit
+## v1.1.1 — Firebase Auth + Together AI + Brevo
 
-### Visual Identity — Rebuilt from Scratch
-- **CSS v4.0** — Cream canvas (`#fdfaf5`), serif elegance, cinematic depth
-- **Landing page** — Apricot Lane cinematic hero → Floret venture cards → Wicklow Way testimonials
-- **3 themes**: Light (cream/paper), Dark (espresso), Nature (organic warmth)
-- **Design tokens**: `--cream`, `--ink`, `--earth`, `--gold`, `--bark`
+### Three New Integrations
+- **Firebase Auth** (`/api/auth/login`) — Free phone (10K/mo) + email auth. Supabase fallback for email, guest mode always available
+- **Together AI** (`/api/ai`) — Second AI fallback (free Llama 3.3, 60 req/min). Chain: Groq → Together AI → Gemini → JeeVan KB (4-deep redundancy)
+- **Brevo** (`/api/newsletter`) — Primary email provider (300 emails/day, unlimited contacts). Chain: Brevo → Mailchimp → Supabase (3-deep redundancy)
 
-### References Matched
-- **Floret Flowers** → Serif headings, cream space, elegant cards, newsletter CTA
-- **Apricot Lane Farms** → Cinematic video hero, parallax, documentary feel, "Since 2021"
-- **Wicklow Way Wines** → Testimonial blocks, press partner strip, warm rustic accents
+### Images (numbered naming)
+`field-05`, `field-06`, `grain-03`, `root-03`, `fungi-03` — no overwrites
 
-### Tech Stack Alternatives
-- Full audit in `TECH_STACK.md`: 25+ free alternatives catalogued
-- 3-deep API redundancy for every function
-- Firebase Auth (free phone), Together AI (free Llama), Brevo (free email)
-
-### Images
-- Numbered naming: `field-01..04`, `fungi-01..02`, `grain-01..02`, `root-01..02`
-- No overwrites — increment number for re-generations
+### Cleanup
+Removed 21 SVG placeholders, 7 old zips, all clutter
 
 ## Platform
-14 pages · 15 APIs · 24 components · 53 plants · 10 categories · 6 podcasts · 5 blogs · 150+ i18n
+14 pages · 16 APIs · 24 components · 53 plants · 10 categories · 33 compiled

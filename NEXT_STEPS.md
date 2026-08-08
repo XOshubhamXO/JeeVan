@@ -1,18 +1,36 @@
 # JeeVan — Next Steps
 
-> **v1.1.0** | **Visual Rebuild Complete** | **2026-08-08**
+> **v1.1.1** | **33 pages, 0 errors**
 
 ---
 
-## What Changed — Complete Visual Rebuild
+## What Changed — Firebase + Together AI + Brevo
 
-The entire visual identity rebuilt based on Floret Flowers, Apricot Lane Farms, and Wicklow Way Wines.
+### 1. Firebase Auth (FREE phone auth)
+- `/api/auth/login` now uses Firebase Identity Toolkit for phone + email
+- **10,000 free phone verifications/month** (vs Supabase: paid only)
+- Fallback chain: Firebase → Supabase (email only) → Guest mode
+- Set `FIREBASE_API_KEY` on Vercel to activate
 
-### CSS v4.0 (`src/app/globals.css`)
-Cream canvas `#fdfaf5` · Serif elegance · Cinematic hero · Testimonial blocks · Press partner strip
+### 2. Together AI (FREE backup AI)
+- `/api/ai` now has 4-deep fallback: Groq → Together AI → Gemini → JeeVan KB
+- **Together AI** offers free Llama 3.3 at 60 req/min (vs Groq: 30/min)
+- Set `TOGETHER_AI_API_KEY` on Vercel to activate
 
-### Landing (`src/app/page.tsx`)
-Cinematic video hero → Venture cards → Testimonials → Partners → Newsletter
+### 3. Brevo (FREE email marketing)
+- `/api/newsletter` — New endpoint: Brevo → Mailchimp → Supabase
+- **300 emails/day, unlimited contacts** (vs Mailchimp: 500 contacts limit)
+- Set `BREVO_API_KEY` + `BREVO_LIST_ID` on Vercel to activate
+
+---
+
+## Keys to Get (All FREE)
+
+| Service | Sign Up At | Key Name |
+|---------|-----------|----------|
+| Firebase Auth | https://console.firebase.google.com | `FIREBASE_API_KEY` |
+| Together AI | https://api.together.xyz | `TOGETHER_AI_API_KEY` |
+| Brevo | https://www.brevo.com | `BREVO_API_KEY`, `BREVO_LIST_ID=2` |
 
 ---
 
@@ -23,37 +41,19 @@ npm install --legacy-peer-deps
 bash scripts/deploy.sh
 ```
 
----
-
-## Free Tech Switches (If You Want Better)
-
-| What | Switch | Benefit |
-|------|--------|---------|
-| Phone Auth | Add Firebase Auth | 10K free verifications/month |
-| AI Backup | Add Together AI | Free Llama 3.3, 60 req/min |
-| Email | Switch to Brevo | 300/day, unlimited contacts |
-| CSS | Switch to UnoCSS | 2x faster builds |
-
-Full alternatives list in `TECH_STACK.md`
+Then add the 3 new env vars to Vercel and redeploy.
 
 ---
 
-## Image Naming Convention
+## Image File Map
 
 ```
-field-01.jpg  field-02.jpg  field-03.jpg  field-04.jpg  (ornamental plants)
-fungi-01.jpg  fungi-02.jpg  (mushrooms) 
-grain-01.jpg  grain-02.jpg  (cereals)
-root-01.jpg   root-02.jpg   (rhizomes/tubers)
+field-01..06 (6 ornamental/field plants)
+fungi-01..03 (3 mushroom varieties)
+grain-01..03  (3 cereal crops)
+root-01..03   (3 roots/rhizomes)
 ```
-
-To replace: generate with next number (`field-05`, `fungi-03`, etc.) — no overwrites.
-
----
+Generate more with next numbers — no overwrites.
 
 ## Admin
-
-| Panel | Passkey |
-|-------|---------|
-| Alpha | `JeeVan-Alpha-2024` |
-| Beta | `JeeVan-Beta-2024` |
+Alpha: `JeeVan-Alpha-2024` · Beta: `JeeVan-Beta-2024`
