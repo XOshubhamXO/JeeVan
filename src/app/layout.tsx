@@ -1,4 +1,5 @@
 import CookieConsent from '@/components/cookie-consent'
+import ExitFeedback from '@/components/exit-feedback'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import ClientLayout from './client-layout'
@@ -54,6 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen bg-[var(--bg-deep)] text-[var(--text-primary)] font-sans antialiased overflow-x-hidden">
         <ClientLayout>{children}</ClientLayout>
         <CookieConsent />
+        <ExitFeedback />
       </body>
     </html>
   )

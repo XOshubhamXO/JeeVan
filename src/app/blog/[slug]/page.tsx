@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation'
 import posts from '@/data/blog-posts.json'
 import ReadingProgress from '@/components/reading-progress'
 import NewsletterSignup from '@/components/newsletter-signup'
+import BlogPostJsonLd from '@/components/blog-jsonld'
 import { ArrowLeft, Clock, Calendar, User } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 
@@ -54,6 +55,7 @@ export default function BlogPostPage() {
   return (
     <div style={{background:'var(--bg-primary)',color:'var(--text-primary)'}} className="min-h-screen">
       <ReadingProgress />
+      <BlogPostJsonLd post={post} />
       <article className="py-24 md:py-32 px-6 md:px-10">
         <div className="max-w-3xl mx-auto">
           <a href="/blog" className="inline-flex items-center gap-2 text-sm mb-8 hover:underline" style={{color:'var(--text-muted)'}}>
