@@ -1,0 +1,26 @@
+{
+  "name": "JeeVan — Bridging Nature & Technology",
+  "short_name": "JeeVan",
+  "description": "Unified platform for sustainable agriculture, natural produce, nursery plants, and tech innovation from Nalanda, Bihar.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a1508",
+  "theme_color": "#0a1508",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["lifestyle", "utilities", "food"],
+  "lang": "en-IN"
+}

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Sitemap: https://jee-van-two.vercel.app/sitemap.xml
+
+User-agent: GPTBot
+Disallow: /

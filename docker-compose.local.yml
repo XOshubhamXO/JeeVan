@@ -1,0 +1,24 @@
+# JeeVan — Local Docker (no SSL, no Nginx, no DB — uses Supabase)
+# Usage: docker compose -f docker-compose.local.yml up -d
+# Access: http://localhost:3000
+
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: JeeVan-local
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
+      - NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - GOOGLE_AI_API_KEY=${GOOGLE_AI_API_KEY}
+      - DEEPL_API_KEY=${DEEPL_API_KEY}
+      - IPINFO_API_KEY=${IPINFO_API_KEY}

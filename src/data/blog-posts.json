@@ -1,0 +1,57 @@
+[
+  {
+    "slug": "why-i-left-software-for-soil",
+    "title": "Why I Left Software for Soil",
+    "date": "2026-07-15",
+    "author": "Shubham Saurabh",
+    "excerpt": "A B.Tech CSE graduate's journey from desktop computing to sustainable farming in Nalanda, Bihar.",
+    "image": "/hero-community.jpg",
+    "category": "Story",
+    "tags": ["founder", "journey", "sustainable farming"],
+    "readTime": "5 min"
+  },
+  {
+    "slug": "what-grows-in-nalanda",
+    "title": "What Grows in Nalanda — A Seasonal Guide",
+    "date": "2026-07-20",
+    "author": "Shubham Saurabh",
+    "excerpt": "Month-by-month planting guide for Bihar's climate. Heirloom varieties that thrive in the Gangetic plain.",
+    "image": "/hero-crops.jpg",
+    "category": "Guide",
+    "tags": ["planting", "seasonal", "bihar", "heirloom"],
+    "readTime": "8 min"
+  },
+  {
+    "slug": "natural-vs-chemical-farming",
+    "title": "Natural vs Chemical — JeeVan's Philosophy",
+    "date": "2026-07-25",
+    "author": "Shubham Saurabh",
+    "excerpt": "Why we choose natural farming methods. The science behind soil health and the economics of organic produce.",
+    "image": "/hero-farm.jpg",
+    "category": "Philosophy",
+    "tags": ["organic", "soil health", "farming philosophy"],
+    "readTime": "6 min"
+  },
+  {
+    "slug": "magahi-heirloom-varieties",
+    "title": "Magahi Heirloom Varieties — Bihar's Agricultural Heritage",
+    "date": "2026-08-01",
+    "author": "Shubham Saurabh",
+    "excerpt": "Magahi Paan, Katarani Rice, Desi Makhana — the indigenous crops that define Bihar's food culture.",
+    "image": "/hero-community.jpg",
+    "category": "Heritage",
+    "tags": ["magahi", "heirloom", "bihar", "indigenous crops"],
+    "readTime": "7 min"
+  },
+  {
+    "slug": "zero-budget-natural-farming",
+    "title": "Zero Budget Natural Farming — A Practical Guide",
+    "date": "2026-08-05",
+    "author": "Shubham Saurabh",
+    "excerpt": "How to farm without spending on external inputs. Jeevamrut, Bijamrit, mulching, and crop rotation.",
+    "image": "/hero-crops.jpg",
+    "category": "Guide",
+    "tags": ["ZBNF", "natural farming", "jeevamrut", "low cost"],
+    "readTime": "10 min"
+  }
+]

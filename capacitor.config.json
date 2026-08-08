@@ -1,0 +1,51 @@
+{
+  "appId": "farm.jeevan.app",
+  "appName": "JeeVan",
+  "webDir": "out",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https",
+    "iosScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 2000,
+      "backgroundColor": "#0a1508",
+      "showSpinner": false,
+      "androidSpinnerStyle": "small",
+      "spinnerColor": "#3d8b37"
+    },
+    "PushNotifications": {
+      "presentationOptions": ["badge", "sound", "alert"]
+    },
+    "LocalNotifications": {
+      "smallIcon": "ic_notification",
+      "iconColor": "#3d8b37"
+    },
+    "Geolocation": {
+      "permissionMessage": "JeeVan uses your location to provide local weather and crop recommendations."
+    }
+  },
+  "android": {
+    "allowMixedContent": false,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": false,
+    "backgroundColor": "#0a1508",
+    "minSdkVersion": 24,
+    "targetSdkVersion": 34,
+    "compileSdkVersion": 34,
+    "buildOptions": {
+      "keystorePath": "JeeVan-release.keystore",
+      "keystorePassword": "${JEEVAN_KEYSTORE_PASSWORD}",
+      "keystoreAlias": "JeeVan",
+      "keystoreAliasPassword": "${JEEVAN_KEYSTORE_PASSWORD}"
+    }
+  },
+  "ios": {
+    "contentInset": "scrollableAxes",
+    "backgroundColor": "#0a1508",
+    "allowsLinkPreview": true,
+    "minVersion": "15.0",
+    "preferredContentMode": "mobile"
+  }
+}

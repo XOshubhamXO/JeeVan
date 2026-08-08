@@ -1,0 +1,112 @@
+# ─── JeeVan Platform — Docker Compose ───
+# Production stack: Next.js + PostgreSQL + Redis + Nginx
+
+version: '3.8'
+
+services:
+  # ─── Next.js Application ───
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: JeeVan-app
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:${DB_PASSWORD}@db:5432/jeevan
+      - REDIS_URL=redis://cache:6379
+      - NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
+      - NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - GOOGLE_AI_API_KEY=${GOOGLE_AI_API_KEY}
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'wget', '--spider', 'http://localhost:3000/api/telemetry']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    networks:
+      - JeeVan-network
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '1.0'
+
+  # ─── PostgreSQL Database ───
+  db:
+    image: postgres:16-alpine
+    container_name: JeeVan-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=jeevan
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ../database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d jeevan']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - JeeVan-network
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  # ─── Redis Cache ───
+  cache:
+    image: redis:7-alpine
+    container_name: JeeVan-cache
+    restart: unless-stopped
+    command: redis-server --appendonly yes --maxmemory 128mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redisdata:/data
+    ports:
+      - '6379:6379'
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    networks:
+      - JeeVan-network
+
+  # ─── Nginx Reverse Proxy ───
+  nginx:
+    image: nginx:alpine
+    container_name: JeeVan-nginx
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - app
+    networks:
+      - JeeVan-network
+    deploy:
+      resources:
+        limits:
+          memory: 64M
+
+volumes:
+  pgdata:
+    driver: local
+  redisdata:
+    driver: local
+
+networks:
+  JeeVan-network:
+    driver: bridge
