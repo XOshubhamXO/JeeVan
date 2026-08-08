@@ -1,30 +1,18 @@
 # JeeVan — Next Steps
 
-> **v1.6.1** | **Visual Rebuild Complete**
+> **v1.1.0** | **Visual Rebuild Complete** | **2026-08-08**
 
 ---
 
-## What Changed — Visual Overhaul
+## What Changed — Complete Visual Rebuild
 
-The entire visual identity rebuilt from scratch. References used:
-- **Floret Flowers** → Serif typography, cream/white space, elegant photography cards, newsletter signup
-- **Apricot Lane Farms** → Cinematic video hero, parallax scroll, documentary narrative
-- **Wicklow Way Wines** → Testimonial carousel, rustic deep palette, "As Seen In" partner strip
+The entire visual identity rebuilt based on Floret Flowers, Apricot Lane Farms, and Wicklow Way Wines.
 
-### CSS completely rewritten (`src/app/globals.css`)
-- Warm cream primary background instead of harsh black
-- Playfair Display serif headings (Floret style)
-- 3 themes: Light (cream), Dark (espresso), Nature (organic)
-- Cinematic hero with parallax video/image
-- Testimonial blocks with left green border
+### CSS v4.0 (`src/app/globals.css`)
+Cream canvas `#fdfaf5` · Serif elegance · Cinematic hero · Testimonial blocks · Press partner strip
 
-### Landing page rebuilt (`src/app/page.tsx`)
-- Full-screen video hero with parallax
-- Venture cards with hover-zoom imagery
-- 3 testimonials with star ratings
-- Partner press-logo strip
-- Newsletter signup section
-- Causes + footer
+### Landing (`src/app/page.tsx`)
+Cinematic video hero → Venture cards → Testimonials → Partners → Newsletter
 
 ---
 
@@ -35,17 +23,37 @@ npm install --legacy-peer-deps
 bash scripts/deploy.sh
 ```
 
-## Image Naming Convention
-New images use numbered names: `field-01.jpg`, `grain-01.jpg`, `root-01.jpg` etc.
-When regenerating, increment the number (`field-02`, `field-03`) — no overwrites.
+---
 
-## Remaining Image Generation
-20 SVG placeholders in `public/plants/` need JPG replacements. Generate in batches of 5 per session using the `generate_image` tool.
+## Free Tech Switches (If You Want Better)
+
+| What | Switch | Benefit |
+|------|--------|---------|
+| Phone Auth | Add Firebase Auth | 10K free verifications/month |
+| AI Backup | Add Together AI | Free Llama 3.3, 60 req/min |
+| Email | Switch to Brevo | 300/day, unlimited contacts |
+| CSS | Switch to UnoCSS | 2x faster builds |
+
+Full alternatives list in `TECH_STACK.md`
+
+---
+
+## Image Naming Convention
+
+```
+field-01.jpg  field-02.jpg  field-03.jpg  field-04.jpg  (ornamental plants)
+fungi-01.jpg  fungi-02.jpg  (mushrooms) 
+grain-01.jpg  grain-02.jpg  (cereals)
+root-01.jpg   root-02.jpg   (rhizomes/tubers)
+```
+
+To replace: generate with next number (`field-05`, `fungi-03`, etc.) — no overwrites.
 
 ---
 
 ## Admin
+
 | Panel | Passkey |
 |-------|---------|
-| Alpha (`/admin/alpha`) | `JeeVan-Alpha-2024` |
-| Beta (`/admin/beta`) | `JeeVan-Beta-2024` |
+| Alpha | `JeeVan-Alpha-2024` |
+| Beta | `JeeVan-Beta-2024` |

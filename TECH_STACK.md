@@ -1,63 +1,80 @@
-# JeeVan — Technology Stack Audit
+# JeeVan — Technology Stack & Free Alternatives
 
-> Free tier only. $0 budget. Every service listed has a free plan.
-
----
-
-## Current Stack (v1.2.0 → v1.3.0)
-
-| Category | Tech | Tier | Alternative (Free) | Verdict |
-|----------|------|------|--------------------|--------|
-| **Framework** | Next.js 14 | Free (Vercel) | Remix, Astro | ✅ Best for SSR+static |
-| **Hosting** | Vercel | Hobby (free) | Netlify, Cloudflare Pages | ✅ Best DX |
-| **Database** | Supabase | Free (500MB) | PlanetScale, Neon | ✅ Best for auth+DB |
-| **Auth** | Supabase Auth | Free (50K MAU) | Firebase Auth, Clerk | ✅ Email free, phone=paid |
-| **Auth (Phone)** | Custom REST API | Free | Firebase Auth (10K phone/mo) | 🔄 Switch to Firebase |
-| **Payments** | Razorpay | Live | Stripe, Paytm | ✅ Already live |
-| **Translation** | DeepL API | Free (500K chars/mo) | LibreTranslate, Google Translate | ✅ Best quality |
-| **AI (Primary)** | Groq Llama 3.3 70B | Free (30 req/min) | Together AI, Fireworks | ✅ Fastest free inference |
-| **AI (Backup)** | Google Gemini | Free (60 req/min) | Claude, Mistral | ✅ Good fallback |
-| **Weather** | Open-Meteo | Free (no key) | OpenWeatherMap | ✅ No limits |
-| **Countries** | REST Countries | Free (no key) | CountryAPI | ✅ Open source |
-| **Market Rates** | Agmarknet (Data.gov.in) | Free | None in India | ✅ Official API |
-| **Email (Newsletter)** | Mailchimp | Free (500 contacts) | SendGrid, Brevo | ✅ Good for small list |
-| **CDN/Video** | Cloudinary | Free (25GB) | Uploadcare, ImageKit | ✅ Generous free tier |
-| **CSS** | Tailwind CSS 3 | Free | UnoCSS, Panda CSS | ✅ Utility-first |
-| **Animation** | Framer Motion | Free | GSAP, Motion One | ✅ React-native |
-| **State** | Zustand | Free | Jotai, Redux | ✅ Lightweight |
-| **Testing** | Playwright | Free | Cypress, Vitest | ✅ Multi-browser |
-| **Icons** | Lucide React | Free | Radix Icons | ✅ Tree-shakeable |
-| **3D (Docker)** | Three.js / R3F | Free | Babylon.js | ✅ WebGL engine |
-| **PWA** | next-pwa compatible | Free | Workbox | ✅ Manifest ready |
+> **v1.1.0** | **$0/month** | **2026-08-08**
 
 ---
 
-## API Redundancy (3-deep fallback per function)
+## Current Stack vs Best Free Alternatives
 
-| Function | Primary | Backup 1 | Backup 2 |
-|----------|---------|----------|----------|
-| AI Advisory | Groq Llama 3.3 | Google Gemini | JeeVan Knowledge Base (local) |
-| Weather | Open-Meteo | — | — |
-| Countries | REST Countries v3.1 | — | — |
-| Translation | DeepL | LibreTranslate | — |
-| Market | Agmarknet | JeeVan cached DB | — |
-| Payments | Razorpay | WhatsApp fallback | — |
-| Auth | Custom REST + Supabase | Firebase Auth | Guest mode |
-| Newsletter | Mailchimp | Supabase direct insert | — |
+### Framework & Hosting
+| Current | Best Alternative | Why |
+|---------|-----------------|-----|
+| Next.js 14 + Vercel | **Astro 5 + Cloudflare Pages** | Lighter, unlimited bandwidth, zero-JS default |
+| Tailwind CSS 3 | **UnoCSS** | Smaller, faster, full Tailwind compat |
+| Vercel Hobby | **Cloudflare Pages** | No 100GB bandwidth cap |
+
+### Database & Backend
+| Current | Best Alternative | Why |
+|---------|-----------------|-----|
+| Supabase (500MB, pauses) | **Turso** | 9GB free, edge-distributed, never pauses |
+| Supabase Auth (email only free) | **Auth.js v5** | Free Google/GitHub/Facebook OAuth |
+| Supabase Auth (phone=paid) | **Firebase Auth** | 10K phone verifications/month FREE |
+| Supabase Realtime | **PocketBase** | Self-hosted, unlimited real-time |
+
+### AI
+| Current | Best Alternative | Why |
+|---------|-----------------|-----|
+| Groq Llama 3.3 70B (30/min) | **Together AI** | Same model, 60 req/min free |
+| Google Gemini (60/min) | **Mistral API** | Free tier, better agri responses |
+| DeepL (500K/mo) | **LibreTranslate** (self-host) | Unlimited, no API key, no limits |
+
+### Media
+| Current | Best Alternative | Why |
+|---------|-----------------|-----|
+| Cloudinary (25GB) | **Uploadcare** | 30GB, URL-based transforms |
+| Cloudinary Video | **Mux** | 300 free video minutes, HLS |
+| | **Bunny CDN** | 1TB free, video optimization |
+
+### Email
+| Current | Best Alternative | Why |
+|---------|-----------------|-----|
+| Mailchimp (500 contacts) | **Brevo** | 300 emails/day, unlimited contacts |
+| | **Resend** | 100/day, modern React email, better DX |
+
+### Payments
+| Current | Best Alternative | Why |
+|---------|-----------------|-----|
+| Razorpay | **Instamojo** | Free onboarding, simpler API |
 
 ---
 
-## What Could Be Better (but costs $)
+## 3-Deep API Redundancy (Every Function)
 
-| Current | Paid Alternative | Benefit |
-|---------|-----------------|---------|
-| Vercel Hobby | Vercel Pro ($20/mo) | Analytics, team, 1TB bandwidth |
-| Supabase Free | Supabase Pro ($25/mo) | No pausing, backups, 8GB DB |
-| DeepL Free | DeepL Pro | Unlimited translations |
-| Groq Free | OpenAI/GPT-4 | Better quality (but $) |
+```
+AI Advisory:     Groq (primary) → Gemini → Mistral → JeeVan KB (local)
+Weather:         Open-Meteo (free) → OpenWeatherMap (1K/day) → WeatherAPI
+Countries:       REST Countries → Countries API → CountryAPI  
+Translation:     DeepL → LibreTranslate → MyMemory (free)
+Market Rates:    Agmarknet → NCDEX → Cached DB
+Payments:        Razorpay → WhatsApp fallback
+Auth:            Supabase Auth → Firebase → Guest mode
+Newsletter:      Mailchimp → Brevo → Supabase direct
+Images:          Cloudinary → Uploadcare → Local /public
+Video:           Cloudinary → Mux → Vimeo embed
+```
 
 ---
 
-## Total Cost: $0/month
+## What You SHOULD Switch To (All Free, Better Results)
 
-All services on free tiers. No paid dependency.
+| Area | Switch | Benefit |
+|------|--------|---------|
+| Auth (Phone) | Add **Firebase Auth** | 10K free phone verifications |
+| AI Backup | Add **Together AI** | Free Llama 3.3, 60 req/min |
+| CSS | Switch to **UnoCSS** | 2x faster builds |
+| Newsletter | Switch to **Brevo** | 300/day unlimited contacts |
+
+---
+
+## Total: $0/month
+Every service listed has a genuine free tier. No trial, no credit card.
